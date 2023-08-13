@@ -1,16 +1,53 @@
-# volumes:
+### Original
+
+# # volumes:
+# services:
+#   fastapi:
+#     environment:
+#       CORS_HOST: http://localhost:3000
+#     build:
+#       context: api
+#       dockerfile: Dockerfile.dev
+#     ports:
+#       - 8000:8000
+#     volumes:
+#       - ./api:/app
+
+#   ghi:
+#     image: node:lts-bullseye
+#     command: /bin/bash run.sh
+#     working_dir: /app
+#     volumes:
+#       - ./ghi:/app
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       HOST_OS: ${OS}
+#       NODE_ENV: development
+#       HOST: "0.0.0.0"
+#       PUBLIC_URL: http://localhost:3000
+#       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+
+# Temp files Phat Made
+
+volumes:
+  accodability:
+    external: true
 services:
-  fastapi:
-    environment:
-      CORS_HOST: http://localhost:3000
+  api:
     build:
       context: api
       dockerfile: Dockerfile.dev
+    environment:
+      DATABASE_URL: postgresql://example_user:secret@db/accodability
+      WAIT_HOSTS: db:5432
+      PORT: 8000
     ports:
-      - 8000:8000
+      - "8000:8000"
+    # volumes:
+    # - ./api:/deps
     volumes:
       - ./api:/app
-
   ghi:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -20,8 +57,16 @@ services:
     ports:
       - "3000:3000"
     environment:
-      HOST_OS: ${OS}
-      NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+      REACT_APP_API_HOST: http://localhost:8000
+  db:
+    image: postgres:14.5-bullseye
+    environment:
+      POSTGRES_PASSWORD: secret
+      POSTGRES_USER: example_user
+      POSTGRES_DB: accodability
+    ports:
+      - "15432:5432"
+    volumes:
+      - accodability:/var/lib/postgresql/data
