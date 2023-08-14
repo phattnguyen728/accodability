@@ -39,6 +39,7 @@ services:
       context: api
       dockerfile: Dockerfile.dev
     environment:
+      CORS_HOST: http://localhost:3000
       DATABASE_URL: postgresql://example_user:secret@db/accodability
       WAIT_HOSTS: db:5432
       PORT: 8000
@@ -57,6 +58,8 @@ services:
     ports:
       - "3000:3000"
     environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_API_HOST: http://localhost:8000
