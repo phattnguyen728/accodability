@@ -7,7 +7,7 @@ const FriendRequest = ({ userID }) => {
   const [friendsList, setFriendsList] = useState([]);
   //do we need to grab friends list from database?
 
-  // method==POST
+  // method:POST
   //     const handleSendFriendRequest = async () => {
   //         try{
   //             const url = 'http://localhost8000:/api/friendsList';
@@ -18,8 +18,9 @@ const FriendRequest = ({ userID }) => {
   //                 // need to finalize parameter for friendslist
   //             }
   //         }
-  //         catch{
-
+  //         catch(error){
+  //            console.error('Error: could not send friend request', error);
+  //            setMessage(' error sending friend request)
   //         }
   //     }
   // }
@@ -32,10 +33,10 @@ const FriendRequest = ({ userID }) => {
       method: "POST",
       //   body: JSON.stringify(data),
 
-      body: {
+      body: JSON.stringify({
         user_id: userId,
         friend_id: friendId,
-      },
+      }),
 
       headers: {
         "Content-Type": "application/json",
