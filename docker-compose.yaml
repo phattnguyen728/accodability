@@ -1,20 +1,18 @@
 volumes:
-  accodability:
+  accodability-data:
+    external: true
+  pg-admin:
     external: true
 services:
-  api:
-    build:
-      context: ./api
-      dockerfile: ./Dockerfile.dev
+  fastapi:
     environment:
-      # CORS_HOST: http://localhost:3000
-      DATABASE_URL: postgresql://example_user:secret@db/accodability
-      # WAIT_HOSTS: db:5432
-      # PORT: 8000
+      CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
     ports:
       - "8000:8000"
-    # volumes:
-    # - ./api:/deps
     volumes:
       - ./api:/app
   ghi:
@@ -30,14 +28,24 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: http://localhost:8000
-  db:
+      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+  postgres:
     image: postgres:14.5-bullseye
+    volumes:
+      - accodability-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: secret
       POSTGRES_USER: example_user
-      POSTGRES_DB: accodability
+      POSTGRES_DB: example_db
     ports:
-      - "15432:5432"
+      - 15432:5432
+  pg-admin:
+    image: dpage/pgadmin4
     volumes:
-      - accodability:/var/lib/postgresql/data
+      - pg-admin:/var/lib/pgadmin
+    ports:
+      - 8082:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: password123
+      PGADMIN_DISABLE_POSTFIX: 1
