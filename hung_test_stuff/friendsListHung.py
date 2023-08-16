@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from authenticator import authenticator
+from hung_test_stuff.authenticatorHung import authenticator
 from fastapi import APIRouter
 from typing import List
 

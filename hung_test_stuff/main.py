@@ -1,4 +1,4 @@
-from authenticator import authenticator
+from hung_test_stuff.authenticatorHung import authenticator
 from fastapi import FastAPI
 from fastapi import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
