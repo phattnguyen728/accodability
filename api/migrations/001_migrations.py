@@ -11,10 +11,16 @@ steps = [
           username TEXT NOT NULL UNIQUE,
           referrer_id INTEGER REFERENCES users("id") ON DELETE CASCADE
 );
+        CREATE TABLE friendsList(
+        id SERIAL NOT NULL UNIQUE,
+        friend_1_id INTEGER NOT NULL,
+        friend_2_id INTEGER NOT NULL,
+
+        )
         """,
         # "Down" SQL statement
         """
-        DROP TABLE users;
+        DROP TABLE (users, friendsList);
         """,
     ],
 ]
