@@ -18,3 +18,5 @@ name from said id_value
     preliminary jwtdown-fastapi code included in separate router.py file
         need to modify for friends & user models
     created new sql-table in migrations called friendsList
+
+adding these files causes fastAPI docs to not work... idk

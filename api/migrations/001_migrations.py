@@ -13,8 +13,7 @@ steps = [
 );
         CREATE TABLE friendsList(
         id SERIAL NOT NULL UNIQUE,
-        friend_1_id INTEGER NOT NULL,
-        friend_2_id INTEGER NOT NULL,
+        friend_id INTEGER NOT NULL,
 
         )
         """,
