@@ -1,6 +1,6 @@
 # router.py most of this is from jwtdown-fastapi, accounts changed to user
 from typing import Optional
-from hung_test_stuff.authenticatorHung import authenticator
+from authenticator import authenticator
 from fastapi import (
     Depends,
     HTTPException,
