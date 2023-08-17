@@ -243,6 +243,14 @@ class AccountOut(BaseModel):
     email: str
 
 
+class AccountUpdate(BaseModel):
+    first_name: Optional[str]
+    last_name: Optional[str]
+    username: Optional[str]
+    password: Optional[str]
+    email: Optional[str]
+
+
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
 
@@ -351,6 +359,39 @@ class AccountQueries:
         except Exception as e:
             print(e)
             return {"Error": "Could not get user by id"}
+
+    def update_user(
+        self, user_id: int, user: AccountUpdate, hashed_password: str
+    ) -> AccountOutWithPassword:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE users
+                        SET first_name = %s,
+                        last_name = %s,
+                        username = %s,
+                        hashed_password = %s,
+                        email = %s
+                        WHERE id = %s;
+                        """,
+                        [
+                            user.first_name,
+                            user.last_name,
+                            user.username,
+                            hashed_password,
+                            user.email,
+                            user_id,
+                        ],
+                    )
+                    data = user.dict()
+                    return AccountOutWithPassword(
+                        id=user_id, **data, hashed_password=hashed_password
+                    )
+        except Exception as e:
+            print(e)
+            return {"Error": "Could not update User"}
 
     def get_all(self) -> List[AccountOutWithPassword]:
         try:

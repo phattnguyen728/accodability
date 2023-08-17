@@ -92,6 +92,7 @@ from queries.accounts import (
     AccountOut,
     AccountQueries,
     AccountOutWithPassword,
+    AccountUpdate,
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
@@ -184,4 +185,14 @@ def delete_user(
     return True
 
 
-# @router.put("/users/{id}", response_model=) FINISH THIS LATER LOOK UP WHERE GET TOKEN CAME FROM
+# determine user token origin
+@router.put("/users/{id}", response_model=AccountOut)
+def update_user(
+    id: int,
+    user: AccountUpdate,
+    repo: AccountQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    hashed_password = authenticator.hash_password(user.password)
+    record = repo.update_user(id, user, hashed_password)
+    return record

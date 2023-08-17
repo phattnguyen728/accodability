@@ -38,14 +38,13 @@ create table friendsList(
 )
 """
 
-@app.post("/login")
-async def login():
+# @app.post("/login")
+# async def login():
 
 
-
-@app.get("/users")
-def get_users():
-    return users
+# @app.get("/users")
+# def get_users():
+#     return users
 
 
 @app.get("/friendships")
