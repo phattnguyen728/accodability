@@ -20,3 +20,6 @@ name from said id_value
     created new sql-table in migrations called friendsList
 
 adding these files causes fastAPI docs to not work... idk
+
+Get-ChildItem -Recurse -Filter \*.pyc | ForEach-Object { Remove-Item $\_.FullName -Force }
+DELETES PYCACHE FIELS
