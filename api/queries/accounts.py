@@ -6,7 +6,11 @@ from pydantic import BaseModel
 pool = ConnectionPool(conninfo=os.environ["DATABASE_URL"])
 
 
-class UserOut(BaseModel):
+class DuplicateAccountError(ValueError):
+    pass
+
+
+class AccountOut(BaseModel):
     id: int
     first: str
     last: str
@@ -15,20 +19,25 @@ class UserOut(BaseModel):
     username: str
 
 
-class UserListOut(BaseModel):
-    users: list[UserOut]
+class AccountListOut(BaseModel):
+    users: list[AccountOut]
 
 
-class UserIn(BaseModel):
+class AccountIn(BaseModel):
     first: str
     last: str
     avatar: str
     email: str
     username: str
+    password: str
 
 
-class UserQueries:
-    def get_all_users(self) -> List[UserOut]:
+class AccountOutWithPassword(AccountOut):
+    hashed_password: str
+
+
+class AccountQueries:
+    def get_all_users(self) -> List[AccountOut]:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -45,11 +54,11 @@ class UserQueries:
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-                    results.append(UserOut(**record))
+                    results.append(AccountOut(**record))
 
                 return results
 
-    def get_user(self, id) -> UserOut:
+    def get_user(self, id) -> AccountOut:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
@@ -68,9 +77,12 @@ class UserQueries:
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-                    return UserOut(**record)
 
-    def create_user(self, data) -> UserOut:
+                return AccountOut(**record)
+
+    def create_user(
+        self, data: AccountIn, hashed_password: str
+    ) -> AccountOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 params = [
@@ -79,11 +91,13 @@ class UserQueries:
                     data.avatar,
                     data.email,
                     data.username,
+                    data.password
+                    # data.hashed_password,
                 ]
                 cur.execute(
                     """
-                    INSERT INTO users (first, last, avatar, email, username)
-                    VALUES (%s, %s, %s, %s, %s)
+                    INSERT INTO users (first, last, avatar, email, username, password)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
                     RETURNING id, first, last, avatar, email, username
                     """,
                     params,
@@ -95,7 +109,8 @@ class UserQueries:
                     record = {}
                     for i, column in enumerate(cur.description):
                         record[column.name] = row[i]
-                    return UserOut(**record)
+
+                return AccountOutWithPassword(**record)
 
     def delete_user(self, user_id) -> None:
         with pool.connection() as conn:
