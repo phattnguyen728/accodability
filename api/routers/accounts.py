@@ -1,82 +1,3 @@
-# from fastapi import (
-#     Depends,
-#     HTTPException,
-#     status,
-#     Response,
-#     APIRouter,
-#     Request,
-# )
-# from jwtdown_fastapi.authentication import Token
-# from authenticator import authenticator
-
-# from pydantic import BaseModel
-
-# from queries.accounts import (
-#     AccountIn,
-#     AccountOut,
-#     AccountOutWithPassword,
-#     AccountQueries,
-#     DuplicateAccountError,
-# )
-# from typing import List, Optional, Union
-
-
-# class AccountForm(BaseModel):
-#     username: str
-#     password: str
-
-
-# class AccountToken(Token):
-#     account: AccountOut
-
-
-# class HttpError(BaseModel):
-#     detail: str
-
-
-# router = APIRouter()
-
-
-# @router.post("/accounts", response_model=AccountToken | HttpError)
-# async def create_account(
-#     info: AccountIn,
-#     request: Request,
-#     response: Response,
-#     account: AccountQueries = Depends(),
-# ):
-#     hashed_password = authenticator.hash_password(info.password)
-#     try:
-#         account = account.create_user(info, hashed_password)
-#     except DuplicateAccountError:
-#         raise HTTPException(
-#             status_code=status.HTTP_400_BAD_REQUEST,
-#             detail="Cannot create an account with those credentials",
-#         )
-#     form = AccountForm(username=info.username, password=info.password)
-#     token = await authenticator.login(response, request, form, account)
-#     return AccountToken(account=account, **token.dict())
-
-
-# @router.get(
-#     "/accounts/{username_email_or_id}", response_model=Optional[AccountOut]
-# )
-# def get_user_by_username_email_or_id(
-#     username_email_or_id: str,
-#     response: Response,
-#     repo: AccountQueries = Depends(),
-# ) -> Optional[AccountOut]:
-#     if username_email_or_id.isdigit():
-#         account = repo.get_user_by_id(int(username_email_or_id))
-#     else:
-#         account = repo.get_user(username_email_or_id)
-#     if username_email_or_id is None:
-#         response.status_code == 400
-#     return account
-
-#     # if username_email_or_id is None:
-#     # response_model= Union[AccountOut, Error]
-#     #
-
 from fastapi import (
     APIRouter,
     Depends,
@@ -93,6 +14,7 @@ from queries.accounts import (
     AccountQueries,
     AccountOutWithPassword,
     AccountUpdate,
+    Friendship,
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
@@ -113,6 +35,21 @@ class HttpError(BaseModel):
 
 
 router = APIRouter()
+
+users = []
+friendships = []
+
+
+@router.post("/friendships")
+def create_friendships(friendship: Friendship):
+    friendships.append(friendship)
+    return friendship
+
+
+@router.get("/friendships/{user_id}")
+def get_friendsList(user_id: int):
+    friends = [x.friend_id for x in friendships if x.user_id == user_id]
+    return friends
 
 
 @router.post("/users", response_model=AccountToken | HttpError)

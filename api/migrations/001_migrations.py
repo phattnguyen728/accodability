@@ -10,7 +10,15 @@ steps = [
           hashed_password VARCHAR(100) NOT NULL,
           email VARCHAR(100) NOT NULL UNIQUE
 
-);
+        );
+        CREATE TABLE friendsList(
+        id serial PRIMARY KEY NOT NULL,
+        user_id INTEGER REFERENCES users(id),
+        friend_id INTEGER REFERENCES users(id),
+        CONSTRAINT unique_user_friend UNIQUE (user_id, friend_id)
+
+        )
+
         """,
         # "Down" SQL statement
         """
@@ -18,3 +26,6 @@ steps = [
         """,
     ],
 ]
+
+
+# check friendsList table for functionality
