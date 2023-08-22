@@ -41,3 +41,20 @@ develop the accept/deny function
   https://stackoverflow.com/questions/1117564/set-django-integerfield-by-choices-name
   https://www.b-list.org/weblog/2007/nov/02/handle-choices-right-way/
   keep testing from there
+
+8/20
+Totally forgot that I'm behind on going thru the videos and example code on Learn website. Need to watch all that stuff before I begin to move further ahead.
+Other than that, I am now able to add a friend by their unique (user_id:int) on the backend. I'm also able to retireve a friendsList tied to a unique user_id on the backend. Now I need to add this feature on the front end. Then I can move on to messages and storing those messages by a specific friendshipId.
+
+---
+
+Course of action:
+-get a working login/logout on the front end
+-get a placeholder front end Home page working
+-add a page on the front end for seeing your list of friends. - add feature to add friends with a search bar (check cars project for stateUpdate search bar)
+-click button to send friend request
+
+- have two buttons to either accept or ignore friend request
+  -stretch goal: use pollers & rabbitMQ to send out email notification whenever one receives a friend request.
+
+Goal after this: implement messaging feature between friends!

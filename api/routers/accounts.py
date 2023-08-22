@@ -34,6 +34,23 @@ class HttpError(BaseModel):
     detail: str
 
 
+# class Friendship(BaseModel):
+#     user_id: int
+#     friend_id: int
+
+#     # # are_they_friends: bool
+#     # @app.get("/friendships")
+#     # def create_friendships(friendship: Friendship):
+#     #     friendships.append(friendship)
+#     #     return friendship
+
+#     # @app.get("/friendships/{user_id}")
+#     # def get_friendsList(user_id: int):
+#     #     friends = [x.friend_id for x in friendships if x.user_id == user_id]
+#     #     return friends
+#     # def add_friend(
+#     #         self, user_id: AccountOut
+#     # ) ->
 router = APIRouter()
 
 users = []

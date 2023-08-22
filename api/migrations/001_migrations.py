@@ -29,3 +29,4 @@ steps = [
 
 
 # check friendsList table for functionality
+# DROP TABLE users, friendsList;
