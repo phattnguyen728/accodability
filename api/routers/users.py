@@ -14,6 +14,7 @@ from queries.users import (
     UserQueries,
     UserUpdate,
     UserOutWithPassword,
+    Friendship,
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
@@ -34,6 +35,21 @@ class HttpError(BaseModel):
 
 
 router = APIRouter()
+
+users = []
+friendships = []
+
+
+@router.post("/followers")
+def follow_user(friendship: Friendship):
+    friendships.append(friendship)
+    return friendship
+
+
+@router.get("/followers/{user_id}")
+def get_follower_list(user_id: int):
+    friends = [x.friend_id for x in friendships if x.user_id == user_id]
+    return friends
 
 
 @router.post("/users", response_model=UserToken | HttpError)

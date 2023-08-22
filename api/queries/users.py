@@ -35,6 +35,11 @@ class UserOutWithPassword(UserOut):
     hashed_password: str
 
 
+class Friendship(BaseModel):
+    user_id: int
+    friend_id: int
+
+
 class UserQueries:
     def create_user(
         self, user: UserIn, hashed_password: str
