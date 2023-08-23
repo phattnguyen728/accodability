@@ -1,61 +1,116 @@
-from fastapi import APIRouter, Depends, HTTPException
-from queries.users import UserQueries, UserListOut, UserOut, UserIn
-from psycopg.errors import UniqueViolation
+from fastapi import (
+    APIRouter,
+    Depends,
+    Response,
+    Request,
+    status,
+    HTTPException,
+)
+from typing import List, Optional
+from queries.users import (
+    DuplicateUserError,
+    UserIn,
+    UserOut,
+    UserQueries,
+    UserUpdate,
+    UserOutWithPassword,
+)
+from jwtdown_fastapi.authentication import Token
+from authenticator import authenticator
+from pydantic import BaseModel
 
-# Implement the following endpoints
-# 1. get a user with a specific id
-# 2. get all users
-# 3. create a user
-# 4. delete a user
-#
-# Resources
-# routers.trucks example
-# users.queries
-# docs page (at http://localhost:8000/docs#)
-# Notion: https://marbled-particle-5cf.notion.site/FastAPI-2eee765c870245ab9f28a3ef5456a981?pvs=4
-# take note of endpoints best practices
+
+class UserForm(BaseModel):
+    username: str
+    password: str
+
+
+class UserToken(Token):
+    user: UserOut
+
+
+class HttpError(BaseModel):
+    detail: str
+
 
 router = APIRouter()
 
 
-@router.get("/api/users/{user_id}", response_model=UserOut)
-def get_user(
-    user_id: int,
-    queries: UserQueries = Depends(),
+@router.post("/users", response_model=UserToken | HttpError)
+async def create_user(
+    info: UserIn,
+    request: Request,
+    response: Response,
+    users: UserQueries = Depends(),
 ):
-    record = queries.get_user(user_id)
-    if record is None:
+    hashed_password = authenticator.hash_password(info.password)
+
+    try:
+        user = users.create_user(info, hashed_password)
+    except DuplicateUserError:
         raise HTTPException(
-            status_code=404, detail="No user found with id {}".format(user_id)
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot create a user with those credentials",
         )
-    else:
-        return record
+    form = UserForm(username=info.username, password=info.password)
+    token = await authenticator.login(response, request, form, users)
+    return UserToken(user=user, **token.dict())
 
 
-@router.delete("/api/users/{user_id}", response_model=bool)
-def delete_user(user_id: int, queries: UserQueries = Depends()):
-    queries.delete_user(user_id)
+@router.get("/token", response_model=UserToken | None)
+async def get_token(
+    request: Request,
+    user: UserOutWithPassword = Depends(
+        authenticator.try_get_current_account_data
+    ),
+) -> UserToken | None:
+    if user and authenticator.cookie_name in request.cookies:
+        return {
+            "access_token": request.cookies[authenticator.cookie_name],
+            "type": "Bearer",
+            "user": user,
+        }
+
+
+@router.get("/users", response_model=List[UserOut])
+def get_all_users(
+    repo: UserQueries = Depends(),
+):
+    return repo.get_all()
+
+
+@router.put("/users/{id}", response_model=UserOut)
+def update_user(
+    id: int,
+    user: UserUpdate,
+    repo: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    hashed_password = authenticator.hash_password(user.password)
+    record = repo.update_user(id, user, hashed_password)
+    return record
+
+
+@router.delete("/users/{id}", response_model=bool)
+def delete_user(
+    id: int,
+    repo: UserQueries = Depends(),
+    account_data: dict = Depends(authenticator.get_current_account_data),
+):
+    repo.delete_user(id)
     return True
 
 
-@router.get("/api/users", response_model=UserListOut)
-def get_users(queries: UserQueries = Depends()):
-    # returning a JSON object is conventional -- preferred instead of returning
-    # a list due to historical # security reasons and flexibility
-    return {"users": queries.get_all_users()}
-
-
-@router.post("/api/users", response_model=UserOut)
-def create_user(
-    user: UserIn,
-    queries: UserQueries = Depends(),
-):
-    # It's fine if you didn't include this, but you might have run into this in testing -- if you try
-    # to create a user with an already existing username or email, the server throws a 500 error
-    # because of exceptions coming from create_user. We should stop it from being a 500 and inform
-    # the client of more specific details.
-
-    try:
-        return queries.create_user(user)
-    except UniqueViolation as e:
-        raise HTTPException(status_code=400, detail=str(e))
+@router.get("/users/{username_email_or_id}", response_model=Optional[UserOut])
+def get_user_by_username_email_or_id(
+    username_email_or_id: str,
+    response: Response,
+    repo: UserQueries = Depends(),
+) -> Optional[UserOut]:
+    if username_email_or_id.isdigit():
+        user = repo.get_user_by_id(int(username_email_or_id))
+    else:
+        user = repo.get_user(username_email_or_id)
+    if user is None:
+        response.status_code = 400
+    return user
