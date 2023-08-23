@@ -44,5 +44,5 @@ steps = [
         """
         DROP TABLE followList;
         """,
-    ]
+    ],
 ]
