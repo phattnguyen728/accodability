@@ -1,3 +1,5 @@
+#docker-compose.yml
+
 volumes:
   accodability-data:
     external: true
@@ -7,6 +9,10 @@ services:
   fastapi:
     environment:
       CORS_HOST: http://localhost:3000
+      SIGNING_KEY: ${SIGNING_KEY}
+      # WAIT_HOSTS:
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
     build:
       context: api
