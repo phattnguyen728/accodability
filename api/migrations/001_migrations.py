@@ -30,5 +30,19 @@ steps = [
         """
         DROP table post;
         """,
+    ],
+    [
+        """
+        CREATE TABLE followList(
+        id serial PRIMARY KEY NOT NULL,
+        user_id INTEGER REFERENCES users(id),
+        friend_id INTEGER REFERENCES users(id),
+        CONSTRAINT unique_user_friend UNIQUE (user_id, friend_id)
+
+        );
+        """,
+        """
+        DROP TABLE followList;
+        """,
     ]
 ]

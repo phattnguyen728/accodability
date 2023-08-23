@@ -1,5 +1,3 @@
-#docker-compose.yml
-
 volumes:
   accodability-data:
     external: true
@@ -11,13 +9,17 @@ services:
       - .env
     depends_on:
       - postgres
+    env_file:
+      - .env
+    depends_on:
+      - postgres
     environment:
       CORS_HOST: http://localhost:3000
+      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       SIGNING_KEY: ${SIGNING_KEY}
-      # WAIT_HOSTS:
+      WAIT_HOSTS: postgres:5432
       WAIT_BEFORE: 5
       WAIT_TIMEOUT: 60
-      DATABASE_URL: postgresql://example_user:secret@postgres/example_db
       SIGNING_KEY: ${SIGNING_KEY}
       WAIT_HOSTS: postgres:5432
       WAIT_BEFORE: 5
