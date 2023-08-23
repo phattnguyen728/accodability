@@ -62,3 +62,13 @@ Course of action:
   -stretch goal: use pollers & rabbitMQ to send out email notification whenever one receives a friend request.
 
 Goal after this: implement messaging feature between friends!
+
+8/22
+Today I tried refactoring the friends/follow code to automatically populate the generated friends list id's to go into the sql tables. **_Currently have a blocker here_**
+Have the general code up i just need to figure out how to refactor it with the correct syntax to utilize the SQL migrations table, currently trying to base it off of create_user POST request's format.
+
+I have also moved the friends' code over into a separate file.
+
+Tomorrow I will work on the login/logout front end auth since the backend endpoints work already. **_Will be based off the w15d2 Learn exploration_**
+course of action:
+create new app.js file, make the login/logout forms, verify authentication requirements.

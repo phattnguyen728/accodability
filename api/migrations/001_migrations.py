@@ -18,7 +18,7 @@ steps = [
     ],
     [
         """
-        CREATE TABLE friendsList(
+        CREATE TABLE followList(
         id serial PRIMARY KEY NOT NULL,
         user_id INTEGER REFERENCES users(id),
         friend_id INTEGER REFERENCES users(id),
@@ -27,7 +27,7 @@ steps = [
         );
         """,
         """
-        DROP TABLE friendsList;
+        DROP TABLE followList;
         """,
     ],
 ]

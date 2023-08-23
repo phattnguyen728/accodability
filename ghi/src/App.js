@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Construct from "./Construct.js";
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
+import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
+import MainPage from "./MainPage.js";
 
 function App() {
   const [launchInfo, setLaunchInfo] = useState([]);
@@ -27,10 +30,16 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-    </div>
+    <BrowserRouter>
+      <AuthProvider>
+        <div className="container">
+          <Routes>
+            <ErrorNotification error={error} />
+            <Route path="/" element={<MainPage />} />
+          </Routes>
+        </div>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

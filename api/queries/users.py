@@ -35,11 +35,6 @@ class UserOutWithPassword(UserOut):
     hashed_password: str
 
 
-class Friendship(BaseModel):
-    user_id: int
-    friend_id: int
-
-
 class UserQueries:
     def create_user(
         self, user: UserIn, hashed_password: str
@@ -220,3 +215,22 @@ class UserQueries:
         except Exception as e:
             print(e)
             return {"Error": "Could not delete User"}
+
+    def create_follow(self, user: Friendship, friend_id: int) -> Friendship:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        INSERT INTO followList
+                        (
+                            friend_id
+                        )
+                        VALUES
+                        (%s)
+                        RETURNING friend_id;
+                        """,
+                        [user.friend_id],
+                    )
+        except Exception:
+            return {"Error": "Could not follow this user"}
