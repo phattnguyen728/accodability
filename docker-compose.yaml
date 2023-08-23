@@ -7,16 +7,17 @@ volumes:
   #   external: true
 services:
   fastapi:
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    env_file:
+      - .env
     depends_on:
       - postgres
     environment:
       CORS_HOST: http://localhost:3000
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
-      SIGNING_KEY: ${SIGNING_KEY}
-      WAIT_HOSTS: postgres:5432
-      # WAIT_BEFORE: 5
-      # WAIT_TIMEOUT: 60
-    # SIGNING_KEY: 3719ef96b0a91eda06ae029d88a0b028fe41a35c0292d05a59a7984cd0ead062
     build:
       context: api
       dockerfile: Dockerfile.dev
