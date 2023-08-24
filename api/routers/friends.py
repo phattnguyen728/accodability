@@ -8,68 +8,57 @@ from fastapi import (
 )
 from typing import List, Optional
 from queries.pool import pool
-from queries.users import (
-    UserOut,
-)
-from queries.friends import FollowerList, FollowerQueries, Friendship
+from queries.users import UserOut, UserIn, UserQueries
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
 from pydantic import BaseModel
+from .users import UserToken, HttpError
 
-users = []
-friendships = []
+from queries.friends import FriendQueries
 
-
-# @router.post("/followers")
-# async def follow_user(
-#     user_id: UserOut(id),
-#     request: Request,
-#     response: Response,
-#     users: FollowerQueries = Depends(authenticator.get_current_account_data),
-# ):
-#     follow = users.create_follow(user_id, friend_id)
+router = APIRouter()
 
 
-# @router.post("/followers")
-# def follow_user(friendship: Friendship):
-#     friendships.append(friendship)
-#     return friendship
+async def get_current_user_id(
+    token: UserToken = Depends(authenticator.get_current_account_data),
+):
+    print(token)
+    sender_id = token["user"]["id"]
+    return sender_id
 
 
-@router.post("/followers/{user_id}")
-def follow_user(user_id: int, friend_id: int):
-    # sets the the id to the current logged in user's id
-
+@router.post("/friends/{receiver_id}")
+async def send_friend_request(
+    receiver_id: int,
+    sender_id: UserToken = Depends(authenticator.get_current_account_data),
+    token: UserToken = Depends(authenticator.get_current_account_data),
+    user: UserQueries = Depends(),
+    friends: FriendQueries = Depends(),
+):
+    # print(token)
+    # sender_id = token["user"]["id"]
+    request_id = friends.send_friend_request(sender_id, receiver_id)
     try:
-        user_id.create_follow(user_id, friend_id)
-    except Exception:
-        return {"Error": "Could not follow this user"}
+        # request_id.send_friend_request(sender_id, receiver_id)
+        request_id
+        return {
+            "Message": " Friend request sent successfully",
+            # "request_id": request_id,
+        }
+    except Exception as e:
+        errorMessage = f"Error Message is {str(e)}"
+        return {"error": errorMessage}
 
 
-# @router.get("/followers/{user_id}")
-# def get_follower_list(user_id: int):
-#     friends = [x.friend_id for x in friendships if x.user_id == user_id]
-#     return friends
+@router.get("/friends/3")
+async def get_pending_friend_requests(
+    user_data: dict = Depends(get_current_user_id),
+    friends: FriendQueries = Depends(authenticator.get_current_account_data),
+):
+    if user_data is None:
+        raise HTTPException(
+            status_code=401, detail="User information not found in token"
+        )
 
-
-# move to routers
-
-# user_id
-# zach id:1
-# adam id:2
-# diana id:3
-# hung id:4
-
-# followList table
-# user_id: 1, friend_id: 4 (zach is following hung)
-# user_id:3, friend_id:2 (diana is following adam)
-# user_id 3 , friend_id 4 (diana is following hung)
-
-# get follow list for user_id 4: it should print out column of friend ids (zach and diana)
-# get a list of every
-# sql SELECT to grab the friend_ids,
-
-# SQL QUERY:
-# SELECT friend_id
-# FROM user_id
-# where user_id = user_id
+    pending_requests = friends.get_pending_friend_requests(user_data)
+    return {"pending_requests": pending_requests}
