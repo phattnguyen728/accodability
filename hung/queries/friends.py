@@ -18,6 +18,9 @@ from pydantic import BaseModel
 
 router = APIRouter()
 
+users = []
+friendships = []
+
 
 class Friendship(BaseModel):
     user_id: int
@@ -25,15 +28,18 @@ class Friendship(BaseModel):
 
 
 class FollowerList:
-    def get_follower_list(self, user: UserOut, friend_id: int) -> Friendship:
+    def create_follower_list(
+        self, user: UserOut, friend_id: int
+    ) -> Friendship:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
-                        """
-                        SELECT friend_id
-                        FROM followList
-                        (user_id, friend_id)
+                        """INSERT INTO followList
+                        (
+                        user_id,
+                        friend_id
+                        )
                         VALUES
                         (%s, %s)
                         RETURNING friend_id;
@@ -45,7 +51,7 @@ class FollowerList:
 
 
 class FollowerQueries:
-    def create_follow(self, user: UserOut, friend_id: int):
+    def create_follow(self, user: UserOut, friend_id: int) -> Friendship:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

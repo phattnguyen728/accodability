@@ -1,16 +1,73 @@
+# volumes:
+#   accodability-data:
+#     external: true
+#   # jwtdown-db-data:
+#   #   external: true
+#   # pg-admin:
+#   #   external: true
+# services:
+#   fastapi:
+#     env_file:
+#       - .env
+#     depends_on:
+#       - postgres
+#     env_file:
+#       - .env
+#     depends_on:
+#       - postgres
+#     environment:
+#       CORS_HOST: http://localhost:3000
+#       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
+#     build:
+#       context: api
+#       dockerfile: Dockerfile.dev
+#     ports:
+#       - "8000:8000"
+#     volumes:
+#       - ./api:/app
+
+#   ghi:
+#     image: node:lts-bullseye
+#     command: /bin/bash run.sh
+#     working_dir: /app
+#     volumes:
+#       - ./ghi:/app
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       HOST_OS: ${OS}
+#       NODE_ENV: development
+#       HOST: "0.0.0.0"
+#       PUBLIC_URL: http://localhost:3000
+#       REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+#   postgres:
+#     image: postgres:14.5-bullseye
+#     volumes:
+#       - accodability-data:/var/lib/postgresql/data
+#     environment:
+#       POSTGRES_PASSWORD: secret
+#       POSTGRES_USER: example_user
+#       POSTGRES_DB: example_db
+#     ports:
+#       - 15432:5432
+#   # pg-admin:
+#   #   image: dpage/pgadmin4
+#   #   volumes:
+#   #     - pg-admin:/var/lib/pgadmin
+#   #   ports:
+#   #     - 8082:80
+#   #   environment:
+#   #     PGADMIN_DEFAULT_EMAIL: test@test.com
+#   #     PGADMIN_DEFAULT_PASSWORD: password123
+#   #     PGADMIN_DISABLE_POSTFIX: 1
+
 volumes:
   accodability-data:
     external: true
-  # jwtdown-db-data:
-  #   external: true
-  # pg-admin:
-  #   external: true
+  pg-admin:
+    external: true
 services:
   fastapi:
-    env_file:
-      - .env
-    depends_on:
-      - postgres
     env_file:
       - .env
     depends_on:
@@ -18,6 +75,10 @@ services:
     environment:
       CORS_HOST: http://localhost:3000
       DATABASE_URL: postgresql://example_user:secret@postgres/example_db
+      SIGNING_KEY: ${SIGNING_KEY}
+      WAIT_HOSTS: postgres:5432
+      WAIT_BEFORE: 5
+      WAIT_TIMEOUT: 60
     build:
       context: api
       dockerfile: Dockerfile.dev
@@ -25,7 +86,6 @@ services:
       - "8000:8000"
     volumes:
       - ./api:/app
-
   ghi:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -50,13 +110,13 @@ services:
       POSTGRES_DB: example_db
     ports:
       - 15432:5432
-  # pg-admin:
-  #   image: dpage/pgadmin4
-  #   volumes:
-  #     - pg-admin:/var/lib/pgadmin
-  #   ports:
-  #     - 8082:80
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: test@test.com
-  #     PGADMIN_DEFAULT_PASSWORD: password123
-  #     PGADMIN_DISABLE_POSTFIX: 1
+  pg-admin:
+    image: dpage/pgadmin4
+    volumes:
+      - pg-admin:/var/lib/pgadmin
+    ports:
+      - 8082:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: password123
+      PGADMIN_DISABLE_POSTFIX: 1
