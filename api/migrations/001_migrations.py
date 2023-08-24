@@ -1,6 +1,5 @@
 steps = [
     [
-        # "Up" SQL statement
         """
         CREATE TABLE users (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -11,24 +10,37 @@ steps = [
             email VARCHAR(100) NOT NULL UNIQUE
         );
         """,
-        # "Down" SQL statement
         """
         DROP TABLE users;
         """,
     ],
     [
         """
-        Create table post (
-            id serial primary key not null,
-            title varchar(150) not null,
-            body text not null,
-            hyperlink varchar(400),
+        CREATE TABLE posts (
+            id SERIAL PRIMARY KEY NOT NULL,
+            title VARCHAR(150) NOT NULL,
+            body TEXT NOT NULL,
+            hyperlink VARCHAR(400),
             author_id INT NOT NULL REFERENCES users(id),
-            created_at timestamp not null default current_timestamp
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
         );
         """,
         """
-        DROP table post;
+        DROP TABLE posts;
+        """,
+    ],
+    [
+        """
+        CREATE TABLE comments (
+            id SERIAL PRIMARY KEY NOT NULL,
+            author_id INT NOT NULL REFERENCES users(id),
+            post_id INT NOT NULL REFERENCES posts(id),
+            body TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
+        );
+        """,
+        """
+        DROP TABLE comments;
         """,
     ],
     [
