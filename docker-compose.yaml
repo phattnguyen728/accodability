@@ -1,8 +1,6 @@
 volumes:
   accodability-data:
     external: true
-  # jwtdown-db-data:
-  #   external: true
   pg-admin:
     external: true
 services:

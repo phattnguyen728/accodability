@@ -11,7 +11,7 @@ steps = [
         );
         """,
         """
-        DROP TABLE users;
+        DROP TABLE (users, friendsList);
         """,
     ],
     [
@@ -45,16 +45,17 @@ steps = [
     ],
     [
         """
-        CREATE TABLE followList(
+        CREATE TABLE friends(
         id serial PRIMARY KEY NOT NULL,
-        user_id INTEGER REFERENCES users(id),
-        friend_id INTEGER REFERENCES users(id),
-        CONSTRAINT unique_user_friend UNIQUE (user_id, friend_id)
+        sender_id INTEGER REFERENCES users(id),
+        receiver_id INTEGER REFERENCES users(id),
+        status VARCHAR(20) NOT NULL DEFAULT 'pending',
+        CONSTRAINT unique_user_friend UNIQUE (sender_id, receiver_id)
 
         );
         """,
         """
-        DROP TABLE followList;
+        DROP TABLE friends;
         """,
     ],
 ]
