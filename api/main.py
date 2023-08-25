@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from routers import users, friends
 
 # from routers import posts
+from routers import comments
 import os
 
 app = FastAPI()
@@ -22,3 +23,4 @@ app.include_router(authenticator.router)
 app.include_router(users.router)
 app.include_router(friends.router)
 # app.include_router(posts.router)
+app.include_router(comments.router)
