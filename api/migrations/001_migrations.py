@@ -49,7 +49,6 @@ steps = [
         id serial PRIMARY KEY NOT NULL,
         sender_id INTEGER REFERENCES users(id),
         receiver_id INTEGER REFERENCES users(id),
-        status VARCHAR(20) NOT NULL DEFAULT 'pending',
         CONSTRAINT unique_user_friend UNIQUE (sender_id, receiver_id)
 
         );

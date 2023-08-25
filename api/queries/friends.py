@@ -6,7 +6,7 @@ from fastapi import (
     status,
     HTTPException,
 )
-from typing import List, Optional
+from typing import List, Optional, Literal, Union
 from queries.pool import pool
 from queries.users import UserOut, UserQueries
 from routers.users import UserToken, HttpError
@@ -18,49 +18,60 @@ from pydantic import BaseModel
 router = APIRouter()
 
 
-class FriendRequest(BaseModel):
+class Error(BaseModel):
+    message: str
+
+
+class FriendRequestIn(BaseModel):
     sender_id: int
     receiver_id: int
     status: str
 
 
+class FriendRequestOut(BaseModel):
+    id: int
+    sender_id: int
+    receiver_id: int
+    # status: str
+
+
+class FriendListOut(BaseModel):
+    sender_id: list[FriendRequestOut]
+
+
 class FriendQueries:
-    user_id: UserQueries = Depends()
-    token: UserToken = Depends(authenticator.get_current_account_data)
-    friend_id: int
-    status: str
-
-    # def send_friend_request(self, token: token, friend_id: int):
-    # user_id = token["user"]["id"]
-    # user_id = token.user.id
     def send_friend_request(
-        self,
-        # sender: token,
-        receiver_id: int,
-        sender_id: UserToken = Depends(
-            authenticator.get_current_account_data
-        ),  # 1
-    ):
-        # user_id = user["user"]["id"]
-        # user_id = user["id"]
-        print(sender_id)
-
+        self, sender_id, receiver_id
+    ) -> Union[List[FriendListOut], Error]:
         try:
             with pool.connection() as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
+                with conn.cursor() as cur:
+                    cur.execute(
                         """
-                        INSERT INTO friends
-                        (
-                            sender_id, receiver_id, status
-                        )
-                        VALUES
-                        (%s, %s, %s)
-                        WHERE sender_id = ${sender_id}
-                        RETURNING receiver_id;
+                        INSERT INTO FRIENDS (sender_id, receiver_id)
+                        VALUES (%s, %s) 
                         """,
-                        [sender_id, receiver_id, "pending"],
+                        [sender_id, receiver_id],
                     )
         except Exception as e:
+            print(e)
+            return {"message": "Could not send friend request"}
+
+    def get_pending_friend_requests(
+        self, user_id
+    ) -> Union[List[FriendListOut], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        SELECT sender_id
+                        FROM friends
+                        WHERE receiver_id = %s 
+                        """,
+                        [user_id],
+                    )
+                    return cur.fetchall()
+        except Exception as e:
             errorMessage = f"Error Message is {str(e)}"
-            return {"error": errorMessage}
+            return {"error": errorMessage}, print(errorMessage)
