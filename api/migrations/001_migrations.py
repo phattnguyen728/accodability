@@ -57,4 +57,17 @@ steps = [
         DROP TABLE friends;
         """,
     ],
+    [
+        """
+        CREATE TABLE messages(
+        id serial PRIMARY KEY NOT NULL,
+        sender_id INTEGER REFERENCES users(id),
+        receiver_id INTEGER REFERENCES users(id),
+        message_content TEXT NOT NULL
+        );
+        """,
+        """
+        DROP TABLE messages;
+        """,
+    ],
 ]

@@ -1,12 +1,7 @@
 from authenticator import authenticator
 from fastapi import FastAPI
-from fastapi import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
-from routers import (
-    users,
-    friends,
-    posts
-)
+from routers import users, friends, posts, messages
 from routers import comments
 import os
 
@@ -27,3 +22,4 @@ app.include_router(users.router)
 app.include_router(friends.router)
 app.include_router(posts.router)
 app.include_router(comments.router)
+app.include_router(messages.router)
