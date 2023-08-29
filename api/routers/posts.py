@@ -5,6 +5,7 @@ from authenticator import authenticator
 
 router = APIRouter()
 
+
 @router.get(
     "/api/posts",
     response_model=List[PostOut],
@@ -16,4 +17,6 @@ async def get_all_posts(
     try:
         return repo.get_all()
     except Exception:
-        raise HTTPException(status_code=400, detail="Could not retrieve posts.")
+        raise HTTPException(
+            status_code=400, detail="Could not retrieve posts."
+        )

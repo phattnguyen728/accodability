@@ -1,17 +1,8 @@
 from fastapi import (
     APIRouter,
-    Depends,
-    Response,
-    Request,
-    status,
-    HTTPException,
 )
-from typing import List, Optional, Literal, Union
+from typing import List, Union
 from queries.pool import pool
-from queries.users import UserOut, UserQueries
-from routers.users import UserToken, HttpError
-from jwtdown_fastapi.authentication import Token
-from authenticator import authenticator
 from pydantic import BaseModel
 
 
@@ -49,7 +40,7 @@ class FriendQueries:
                     cur.execute(
                         """
                         INSERT INTO FRIENDS (sender_id, receiver_id)
-                        VALUES (%s, %s) 
+                        VALUES (%s, %s)
                         """,
                         [sender_id, receiver_id],
                     )
@@ -67,7 +58,7 @@ class FriendQueries:
                         """
                         SELECT sender_id
                         FROM friends
-                        WHERE receiver_id = %s 
+                        WHERE receiver_id = %s
                         """,
                         [user_id],
                     )

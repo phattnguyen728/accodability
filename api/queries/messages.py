@@ -38,7 +38,7 @@ class MessageQueries:
                         """,
                         [sender_id, receiver_id, message_content],
                     )
-        except Exception as e:
+        except Exception:
             return {"message": "Could not send message to specified user"}
 
     def get_message_inbox(self, user_id) -> List[MessageOut]:

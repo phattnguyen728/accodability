@@ -7,7 +7,6 @@ from queries.comments import (
     CommentOut,
     CommentEdit,
 )
-from psycopg.errors import ForeignKeyViolation
 from authenticator import authenticator
 
 router = APIRouter()

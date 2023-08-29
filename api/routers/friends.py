@@ -1,18 +1,10 @@
 from fastapi import (
     APIRouter,
     Depends,
-    Response,
-    Request,
-    status,
     HTTPException,
 )
-from typing import List, Optional
-from queries.pool import pool
-from queries.users import UserOut, UserIn, UserQueries
-from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
-from pydantic import BaseModel
-from .users import UserToken, HttpError
+from .users import UserToken
 
 from queries.friends import FriendQueries
 
