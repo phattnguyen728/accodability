@@ -1,6 +1,7 @@
 from fastapi import (
     APIRouter,
     Depends,
+    HTTPException,
 )
 
 from queries.messages import MessageQueries
@@ -34,3 +35,21 @@ async def get_current_user_id(
 ):
     sender_id = token["user"]["id"]
     return sender_id
+
+
+@router.get("/messages")
+async def get_message_inbox(
+    user: UserToken = Depends(authenticator.get_current_account_data),
+    messages: MessageQueries = Depends(),
+):
+    user_id = user["id"]
+    try:
+        if user is None:
+            raise HTTPException(
+                status_code=401, detail="User information not found in token"
+            )
+        message_inbox = messages.get_message_inbox(user_id)
+        return {"Message Inbox": message_inbox}
+    except Exception as e:
+        error_message = f"Error Message is {str(e)}"
+        return {"error": error_message}
