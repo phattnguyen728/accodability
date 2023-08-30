@@ -7,6 +7,7 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Home from "./Home";
 import Nav from "./Nav";
 import SignUpForm from "./SignUp";
+import SignInForm from "./SignIn";
 
 function App() {
   // const [launchInfo, setLaunchInfo] = useState([]);
@@ -35,12 +36,13 @@ function App() {
 
   return (
     <BrowserRouter basename={basename}>
-      <AuthProvider>
+      <AuthProvider baseUrl={process.env.REACT_APP_API_HOST}>
         <Nav />
         <div>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUpForm />} />
+            <Route path="/signin" element={<SignInForm />} />
           </Routes>
           {/* <ErrorNotification error={error} />
           <Construct info={launchInfo} /> */}
