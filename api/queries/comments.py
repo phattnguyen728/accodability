@@ -137,7 +137,7 @@ class CommentQueries:
                     )
         except Exception as e:
             return Error(
-                {"message": f"Could not delete specified comment due to: {e}"}
+                {"message": f"Could not update specified comment due to: {e}"}
             )
 
     def get_comments_by_user(self, author_id: int) -> Union[CommentOut, Error]:
