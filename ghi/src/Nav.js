@@ -15,6 +15,9 @@ function Nav() {
         <NavLink className="navbar-brand" to="/">
           Accodability
         </NavLink>
+        <NavLink className="navbar-brand" to="/friends">
+          Friends
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"

@@ -7,13 +7,12 @@ import os
 
 
 app = FastAPI()
-
-
-@app.get("/")
-def root():
-    return {"message": "You hit the root path!"}
-
-
+app.include_router(authenticator.router)
+app.include_router(users.router)
+app.include_router(friends.router)
+app.include_router(posts.router)
+app.include_router(comments.router)
+app.include_router(messages.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
@@ -22,9 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(authenticator.router)
-app.include_router(users.router)
-app.include_router(friends.router)
-app.include_router(posts.router)
-app.include_router(comments.router)
-app.include_router(messages.router)
+
+@app.get("/")
+def root():
+    return {"message": "You hit the root path!"}

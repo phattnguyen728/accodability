@@ -124,3 +124,13 @@ Friends table was modified, as well as everything in the friends.py file(s) in r
 Course of action:
 Build feature to get list of friends from tables.
 Build front end Home, Login, Logout, Sign up pages.
+
+8/29
+
+Back end friend request(POST) and friend list (GET) done on backend. Modified the code and sql table statements to include the username in the response bodies now. Both ID and usernames are returned when running these.
+
+Started on the Unit Test for (POST) send_friend_request. Need to spend more time developing it.
+
+Frontend component of getting a friend list mostly complete. Need to develop the delete friend button/method on front and backend. Need to develop this in conjunction with unit testing. framework code is up but not tested yet. Need the frontend landing page up and running first.
+
+CI/CD & deployment is also headed by myself. docker-compose.yaml, .gitlab-ci.yml m, Dockerfile, Dockerfile.dev files all modified. _STILL IN PROGRESS_ . need to finish adding content to these files as well.

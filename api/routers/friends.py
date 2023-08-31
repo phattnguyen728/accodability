@@ -18,12 +18,13 @@ async def send_friend_request(
     friends: FriendQueries = Depends(),
 ):
     sender_id = sender["id"]
-    print(sender_id)
+    username = sender["username"]
+    # print(sender_id)
     # print(token)
     # sender_id = token["user"]["id"]
     try:
         # request_id.send_friend_request(sender_id, receiver_id)
-        friends.send_friend_request(sender_id, receiver_id)
+        friends.send_friend_request(sender_id, receiver_id, username)
         return {
             "Message": " Friend request sent successfully",
         }
@@ -42,16 +43,13 @@ async def get_current_user_id(
 
 @router.get("/friends")
 async def get_pending_friend_requests(
-    # id#1
     user: UserToken = Depends(authenticator.get_current_account_data),
-    friends: FriendQueries = Depends(),
+    friendList: FriendQueries = Depends(),
 ):
     user_id = user["id"]
-    # 1
-    # return print(user_id)
     if user is None:
         raise HTTPException(
             status_code=401, detail="User information not found in token"
         )
-    pending_requests = friends.get_pending_friend_requests(user_id)
-    return {"pending_requests": pending_requests}
+    friends = friendList.get_pending_friend_requests(user_id)
+    return friends

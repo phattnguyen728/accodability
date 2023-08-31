@@ -1,10 +1,20 @@
 services:
   - docker:dind
+  - postgres:14.2-bullseye
 
-stages:
-  - test
-  - build
-  - deploy
+variables:
+  POSTGRES_DB: test_db
+  POSTGRES_USER: test_user
+  POSTGRES_PASSWORD: test_password
+  POSTGRES_HOST_AUTH_METHOD: trust
+  DATABASE_URL: postgresql://postgres:test@postgres:5432/postgres
+  CORS_HOST: http://localhost:3000
+  SIGNING_KEY: ${SIGNING_KEY}
+
+# stages:
+#   - test
+#   - build
+#   - deploy
 
 # Run flake8 to check for code quality
 lint-test-job:
@@ -77,3 +87,12 @@ build-api-image:
 #   artifacts:
 #     paths:
 #       - public
+
+# friends feature
+friends-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd api
+    - pip install -r requirements.txt
+    - python -m pytest
