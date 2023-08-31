@@ -5,7 +5,6 @@ from typing import List, Union
 from queries.pool import pool
 from pydantic import BaseModel
 
-from authenticator import authenticator
 
 router = APIRouter()
 

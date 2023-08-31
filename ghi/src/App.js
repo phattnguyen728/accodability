@@ -3,9 +3,9 @@ import "./App.css";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Home from "./Home";
 import Nav from "./Nav";
-import SignUpForm from "./SignUp";
-import FriendList from "./friends/FriendList.js";
-import SignInForm from "./SignIn";
+import SignUpForm from "./Users/SignUp.js";
+import FriendList from "./Friends/FriendList.js";
+import SignInForm from "./Users/SignIn.js";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
