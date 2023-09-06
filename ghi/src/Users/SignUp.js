@@ -68,11 +68,11 @@ function SignUpForm() {
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       let passwordAlert = document.getElementById("password-alert");
       passwordAlert = passwordAlert.classList.remove("d-none");
     }
-    if (password == confirmPassword) {
+    if (password === confirmPassword) {
       const accountData = {
         first_name: firstName,
         last_name: lastName,
@@ -101,7 +101,6 @@ function SignUpForm() {
                 type="text"
                 id="firstName"
                 className="form-control"
-                required
               />
               <label htmlFor="firstName" className="form-label">
                 First Name
@@ -115,7 +114,6 @@ function SignUpForm() {
                 type="text"
                 id="lastName"
                 className="form-control"
-                required
               />
               <label htmlFor="lastName" className="form-label">
                 Last Name
@@ -129,7 +127,6 @@ function SignUpForm() {
                 type="text"
                 id="username"
                 className="form-control"
-                required
               />
               <label htmlFor="username" className="form-label">
                 Username

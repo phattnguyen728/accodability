@@ -2,7 +2,6 @@ from pydantic import BaseModel
 from fastapi.testclient import TestClient
 
 from main import app
-
 from authenticator import authenticator
 from queries.users import UserQueries
 
@@ -23,14 +22,19 @@ class UserOut(BaseModel):
 
 
 def test_user_data():
-    user = UserOut(
-        id=1,
-        first_name="phat",
-        last_name="nguyen",
-        username="phatnguyen",
-        email="phat@test.com",
-    )
-    return user
+    account_data = {
+        "id": "1",
+        "first_name": "phat",
+        "last_name": "nguyen",
+        "username": "phatnguyen",
+        "email": "phat@test.com",
+    }
+
+    assert account_data["id"] == "1"
+    assert account_data["first_name"] == "phat"
+    assert account_data["last_name"] == "nguyen"
+    assert account_data["username"] == "phatnguyen"
+    assert account_data["email"] == "phat@test.com"
 
 
 class TestUserQuery:

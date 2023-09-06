@@ -4,7 +4,7 @@ from fastapi import (
     HTTPException,
 )
 
-from queries.messages import MessageQueries
+from queries.messages import MessageQueries, MessageIn
 from authenticator import authenticator
 from .users import UserToken
 
@@ -14,12 +14,21 @@ router = APIRouter()
 
 @router.post("/messages")
 async def create_message(
-    receiver_id: int,
-    message_content: str,
+    # receiver_id: int,
+    # message_content: str,
+    # sender_id: int = None,
+    message_form: MessageIn,
     sender: UserToken = Depends(authenticator.get_current_account_data),
     message: MessageQueries = Depends(),
 ):
-    sender_id = sender["id"]
+    if message_form.sender_id is None:
+        sender_id = sender["id"]
+    else:
+        sender_id = message_form.sender_id
+
+    receiver_id = message_form.receiver_id
+    message_content = message_form.message_content
+
     try:
         message.create_message(sender_id, receiver_id, message_content)
         return {

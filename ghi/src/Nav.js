@@ -18,6 +18,12 @@ function Nav() {
         <NavLink className="navbar-brand" to="/friends">
           Friends
         </NavLink>
+        <NavLink className="navbar-brand" to="/messages">
+          Messages
+        </NavLink>
+        <NavLink className="navbar-brand" to="/compose">
+          Create Message
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"

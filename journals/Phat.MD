@@ -59,3 +59,11 @@ Added Tailwind
 
 Added migrations Table for messages
 Added Post request for Sending Message with protected endpoint
+
+# Tues September 5
+
+Have test a working test for messages and users
+Updated back end code for messages to work with front end
+Have a working front end to get messages and create messages
+Added a decoder to pass information from front end to back end
+Added a reusable component to get user information

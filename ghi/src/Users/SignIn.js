@@ -39,7 +39,6 @@ function SignInForm() {
                 type="text"
                 id="username"
                 className="form-control"
-                required
               />
               <label htmlFor="username" className="form-label">
                 Username
