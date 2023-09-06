@@ -51,7 +51,6 @@ export default function MessageInbox() {
     }
   };
 
-
   useEffect(() => {
     fetchMessages();
   }, [token]);
@@ -88,7 +87,9 @@ export default function MessageInbox() {
                 <td>{userProfiles[message.sender_id]?.email}</td>
                 <td>
                   {userProfiles[message.sender_id]
-                    ? `${userProfiles[message.sender_id].first_name} ${userProfiles[message.sender_id].last_name}`
+                    ? `${userProfiles[message.sender_id].first_name} ${
+                        userProfiles[message.sender_id].last_name
+                      }`
                     : ""}
                 </td>
               </tr>

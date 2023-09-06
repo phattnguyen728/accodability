@@ -4,11 +4,11 @@ import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import Home from "./Home";
 import Nav from "./Nav";
 import SignUpForm from "./Users/SignUp.js";
-import FriendList from "./Friends/FriendList.js";
 import SignInForm from "./Users/SignIn.js";
 import MessageInbox from "./Messages/MessagesInbox";
 import MessageForm from "./Messages/MessageForm";
-
+import FriendList from "./Friends/FriendList";
+import FriendRequestForm from "./Friends/FriendRequestForm";
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
@@ -22,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/signup" element={<SignUpForm />} />
             <Route path="/friends" element={<FriendList />} />
+            <Route path="/addfriend" element={<FriendRequestForm />} />
             <Route path="/messages" element={<MessageInbox />} />
             <Route path="/compose" element={<MessageForm />} />
             <Route path="/signin" element={<SignInForm />} />

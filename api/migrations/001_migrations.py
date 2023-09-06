@@ -50,6 +50,7 @@ steps = [
         sender_id INTEGER REFERENCES users(id),
         receiver_id INTEGER REFERENCES users(id),
         username VARCHAR(150) REFERENCES users(username),
+        status varchar(50) DEFAULT 'pending',
         CONSTRAINT unique_user_friend UNIQUE (sender_id, receiver_id)
 
         );

@@ -134,3 +134,12 @@ Started on the Unit Test for (POST) send_friend_request. Need to spend more time
 Frontend component of getting a friend list mostly complete. Need to develop the delete friend button/method on front and backend. Need to develop this in conjunction with unit testing. framework code is up but not tested yet. Need the frontend landing page up and running first.
 
 CI/CD & deployment is also headed by myself. docker-compose.yaml, .gitlab-ci.yml m, Dockerfile, Dockerfile.dev files all modified. _STILL IN PROGRESS_ . need to finish adding content to these files as well.
+
+9/3
+
+made some progress in the unit test for GET pending friend requests (list)
+need to figure out format of the faker data
+
+NEED TO modify my friends front end to include an approve or deny button and implement the backend for this(friendList.js). (check the conference example for statuses and check the car example for service history status)
+ideally id either create two functions to change the status to accepted or denied;
+or hard code a set of tuples for the status like how i did in django.

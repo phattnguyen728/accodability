@@ -42,7 +42,9 @@ function FriendList() {
         <table className="table table-dark table-hover table-striped">
           <thead>
             <tr>
-              <th>Friends</th>
+              <th>user_id</th>
+              <th>username</th>
+              <th>status</th>
             </tr>
           </thead>
           <tbody>
@@ -51,6 +53,7 @@ function FriendList() {
                 <tr key={friend.id}>
                   <td>{friend.sender_id}</td>
                   <td>{friend.username}</td>
+                  <td>{friend.status}</td>
                 </tr>
               );
             })}

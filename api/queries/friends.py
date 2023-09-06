@@ -17,7 +17,7 @@ class FriendRequestIn(BaseModel):
     sender_id: int
     receiver_id: int
     username: str
-    status: str
+    # status: str
 
 
 class FriendRequestOut(BaseModel):
@@ -25,7 +25,7 @@ class FriendRequestOut(BaseModel):
     sender_id: int
     receiver_id: int
     username: str
-    # status: str
+    status: str
 
 
 class FriendListOut(BaseModel):
@@ -59,7 +59,7 @@ class FriendQueries:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        SELECT id, sender_id, receiver_id, username
+                        SELECT id, sender_id, receiver_id, username, status
                         FROM friends
                         WHERE receiver_id = %s
                         """,
@@ -82,6 +82,7 @@ class FriendQueries:
                             sender_id=row[1],
                             receiver_id=row[2],
                             username=row[3],
+                            status=row[4],
                         )
                         friends.append(message)
                     return friends

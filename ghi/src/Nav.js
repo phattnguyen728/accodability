@@ -15,6 +15,9 @@ function Nav() {
         <NavLink className="navbar-brand" to="/">
           Accodability
         </NavLink>
+        <NavLink className="navbar-brand" to="/addfriend">
+          Add Friend
+        </NavLink>
         <NavLink className="navbar-brand" to="/friends">
           Friends
         </NavLink>

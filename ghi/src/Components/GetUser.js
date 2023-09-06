@@ -5,7 +5,6 @@ export default function UserProfile({ usernameEmailOrId }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
     const fetchUser = async () => {
       try {
         const response = await fetch(
@@ -25,7 +24,6 @@ export default function UserProfile({ usernameEmailOrId }) {
       }
     };
 
-
     fetchUser();
   }, [usernameEmailOrId]);
 
@@ -36,7 +34,6 @@ export default function UserProfile({ usernameEmailOrId }) {
   if (!user) {
     return <p>User not found</p>;
   }
-
 
   return (
     <div>

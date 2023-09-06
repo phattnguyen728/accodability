@@ -33,7 +33,7 @@ export default function MessageForm() {
         {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
           credentials: "include",
         }
@@ -65,17 +65,20 @@ export default function MessageForm() {
       receiver_id: recipientId,
       message_content: messageContent,
     };
-    console.log(JSON.stringify(newMessage))
+    console.log(JSON.stringify(newMessage));
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_HOST}/messages`, {
-        method: "post",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newMessage),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOST}/messages`,
+        {
+          method: "post",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newMessage),
+        }
+      );
 
       if (response.ok) {
         console.log("Message sent successfully");
