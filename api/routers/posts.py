@@ -71,21 +71,23 @@ async def get_post_by_id(
             status_code=500,
             detail="An error occurred while fetching the post.",
         )
-# # put request to update specific post and still working
-# @router.put(
-#     "/api/posts/{post_id}",
-#     response_model=PostOut,
-# )
-# async def update_post(
-#     post_id: int,
-#     post_data: PostIn,
-#     repo: PostQueries = Depends(),
-#     account_data: dict = Depends(authenticator.get_current_account_data),
-# ):
-#     try:
-#         updated_post = repo.update_post(post_id, post_data)
-#         if not updated_post:
-#             raise HTTPException(status_code=404, detail="Post not found")
-#         return updated_post
-#     except Exception:
-#         raise HTTPException(status_code=500, detail="An error occurred while updating the post.")
+
+
+@router.put(
+    "/api/posts/{post_id}",##/author_id{author_id}
+    response_model=PostOut,
+)
+async def update_post(
+    post_id: int,
+    author_id: int,
+    post_data: PostIn,
+    repo: PostQueries = Depends(),
+    user: UserToken = Depends(authenticator.get_current_account_data),
+):
+    try:
+        updated_post = repo.update_post(post_id, post_data, user["id"])
+        if not updated_post:
+            raise HTTPException(status_code=404, detail="Post not found")
+        return updated_post
+    except Exception:
+        raise HTTPException(status_code=500, detail="An error occurred while updating the post.")

@@ -81,7 +81,6 @@ class PostQueries:
             print(e)
             return {"message": "Could not create post"}
 
-    # Get request to fetch specific post and load all comments
     def get_post_by_id(self, post_id: int) -> Optional[PostOut]:
         try:
             with pool.connection() as conn:
@@ -126,7 +125,9 @@ class PostQueries:
         except Exception as e:
             print(e)
             return False
-    # put request still working on this code
+
+            return None
+
     # def update_post(self, post_id: int, post_data: PostIn) -> Optional[PostOut]:
     #     try:
     #         with pool.connection() as conn:
@@ -136,28 +137,56 @@ class PostQueries:
     #                     UPDATE posts
     #                     SET title = %s, body = %s, hyperlink = %s
     #                     WHERE id = %s
-    #                     RETURNING id, created_at
+    #                     RETURNING *
     #                     """,
     #                     [post_data.title, post_data.body, post_data.hyperlink, post_id],
     #                 )
-    #                 result = cur.execute(
-    #                     """
-    #                     SELECT * FROM posts
-    #                     WHERE id = %s
-    #                     """,
-    #                     [post_id],
-    #                 )
-    #                 record = result.fetchone()
-    #                 created_at = record[5]
-    #                 return PostOut(
-    #                     id=post_id,
-    #                     title=post_data.title,
-    #                     body=post_data.body,
-    #                     hyperlink=post_data.hyperlink,
-    #                     author_id=post_data.author_id,
-    #                     created_at=created_at,
+    #                 updated_post = cur.fetchone()
+    #                 if updated_post:
+    #                     return PostOut(
+    #                         id=updated_post[0],
+    #                         title=updated_post[1],
+    #                         body=updated_post[2],
+    #                         hyperlink=updated_post[3],
+    #                         author_id=updated_post[4],
+    #                         created_at=updated_post[5],
     #                     )
     #                 return None
     #     except Exception as e:
     #         print(e)
     #         return None
+    def update_post(self, post_id: int, post_data: PostIn, author_id: int) -> Optional[PostOut]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    cur.execute(
+                        """
+                        UPDATE posts
+                        SET title = %s, body = %s, hyperlink = %s
+                        WHERE id = %s AND author_id = %s
+                        """,
+                        [post_data.title, post_data.body, post_data.hyperlink, post_id, author_id],
+                    )
+                    if cur.rowcount == 1:
+                        result = cur.execute(
+                            """
+                            SELECT * FROM posts
+                            WHERE id = %s
+                            """,
+                            [post_id],
+                        )
+
+                        updated_post = result.fetchone()
+                        if updated_post:
+                            return PostOut(
+                                id=updated_post[0],
+                                title=updated_post[1],
+                                body=updated_post[2],
+                                hyperlink=updated_post[3],
+                                author_id=updated_post[4],
+                                created_at=updated_post[5],
+                                )
+                    return None
+        except Exception as e:
+            print(e)
+            return None
