@@ -1,11 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext, useToken } from "@galvanize-inc/jwtdown-for-react";
+import jwtDecode from "jwt-decode";
 
 function FriendList() {
   const { token } = useAuthContext();
   const [friends, setFriends] = useState([]);
+  const [userId, setUserId] = useState(null);
+
   // const [search, setSearch] = useState("");
   // const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const userId = parseInt(decodedToken.sub, 10);
+        setUserId(userId);
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  }, [token]);
 
   const fetchFriends = async () => {
     const fetchConfig = {
@@ -16,9 +31,6 @@ function FriendList() {
       credentials: "include",
     };
     const url = `${process.env.REACT_APP_API_HOST}/friends`;
-    console.log(token);
-    console.log(fetchConfig);
-    console.log(url);
     const response = await fetch(url, fetchConfig);
     console.log(response);
     if (response.ok) {
@@ -30,20 +42,26 @@ function FriendList() {
     }
   };
 
-  // const handleApprove = async (sender_id) => {
-  //   const acceptUrl = `${process.env.REACT_APP_API_HOST}/friends/${sender_id}`;
-  //   const fetchConfig = {
-  //     method: "put",
-  //     headers: {
-  //       Authentication: `Bearer ${token}`,
-  //     },
-  //     credentials: "include",
-  //   };
-  //   const response = await fetch(acceptUrl, fetchConfig).then(() => {
-  //     fetchFriends();
-  //     console.log(response);
-  //   });
-  // };
+  const handleApprove = async (sender_id, friendRequestId) => {
+    const updateFriend = {
+      sender_id: parseInt(sender_id, 10),
+      receiver_id: userId,
+    };
+    const acceptUrl = `${process.env.REACT_APP_API_HOST}/friends/${friendRequestId}`;
+    const fetchConfig = {
+      method: "put",
+      headers: {
+        Authentication: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(updateFriend),
+    };
+    const response = await fetch(acceptUrl, fetchConfig).then(() => {
+      fetchFriends();
+      // console.log(response);
+    });
+  };
   useEffect(() => {
     fetchFriends();
   }, [token]);
@@ -69,17 +87,19 @@ function FriendList() {
                   <td>{friend.sender_id}</td>
                   <td>{friend.username}</td>
                   <td>{friend.status}</td>
-                  <td>
-                    {/* <button
-                      name="approve"
-                      className="btn btn-success"
-                      onClick={() => {
-                        handleApprove(`${friend.id}`);
-                      }}
-                    >
-                      Approve
-                    </button> */}
-                  </td>
+                  {friend.status === "pending" && (
+                    <td>
+                      <button
+                        name="approve"
+                        className="btn btn-success"
+                        onClick={() => {
+                          handleApprove(`${friend.sender_id}`, friend.id);
+                        }}
+                      >
+                        Approve
+                      </button>
+                    </td>
+                  )}
                 </tr>
               );
             })}
