@@ -12,6 +12,7 @@ class PostIn(BaseModel):
     title: str
     body: str
     hyperlink: Optional[str]
+    author_id: int
 
 
 class PostOut(BaseModel):
@@ -48,7 +49,7 @@ class PostQueries:
             print(e)
             return {"message": "Could not retrieve posts."}
 
-    def create_post(self, post_data: PostIn, author_id: int) -> PostOut:
+    def create_post(self, title, body, hyperlink, author_id) -> PostOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -59,9 +60,9 @@ class PostQueries:
                         RETURNING id, author_id, created_at
                         """,
                         (
-                            post_data.title,
-                            post_data.body,
-                            post_data.hyperlink,
+                            title,
+                            body,
+                            hyperlink,
                             author_id,
                             datetime.now(),
                          ),
@@ -71,9 +72,9 @@ class PostQueries:
                     created_at = data[1]
                     return PostOut(
                         id=new_post_id,
-                        title=post_data.title,
-                        body=post_data.body,
-                        hyperlink=post_data.hyperlink,
+                        title=title,
+                        body=body,
+                        hyperlink=hyperlink,
                         author_id=author_id,
                         created_at=created_at,
                     )

@@ -32,8 +32,16 @@ async def create_post(
     repo: PostQueries = Depends(),
     user: UserToken = Depends(authenticator.get_current_account_data),
 ):
+    if post_data.author_id is None:
+        author_id = user["id"]
+    else:
+        author_id = post_data.author_id
+
+    title = post_data.title
+    body = post_data.body
+    hyperlink = post_data.hyperlink
     try:
-        new_post = repo.create_post(post_data, user["id"])
+        new_post = repo.create_post(title, body, hyperlink, author_id)
         return new_post
     except Exception:
         raise HTTPException(status_code=400, detail="could not create post.")
