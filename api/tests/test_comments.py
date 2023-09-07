@@ -1,9 +1,6 @@
 from fastapi.testclient import TestClient
 from authenticator import authenticator
-
 from main import app
-
-# from queries.users import UserOut
 from queries.comments import CommentIn, CommentOut, CommentQueries, CommentEdit
 from datetime import datetime
 

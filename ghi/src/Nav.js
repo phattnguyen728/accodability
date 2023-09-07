@@ -1,12 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 function Nav() {
-  const { token } = useToken();
-  const { logout } = useToken();
+  const { token, logout } = useToken();
+  const navigate = useNavigate();
 
   function deleteToken(event) {
     logout();
+    navigate("/");
   }
 
   return (
@@ -59,6 +60,17 @@ function Nav() {
                   to="/signin"
                 >
                   Sign In
+                </NavLink>
+              </li>
+            )}
+            {token && (
+              <li className="nav-item">
+                <NavLink
+                  className="nav-link active"
+                  aria-current="page"
+                  to="/comments/create"
+                >
+                  Create Comment
                 </NavLink>
               </li>
             )}

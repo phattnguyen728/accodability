@@ -9,6 +9,8 @@ import MessageInbox from "./Messages/MessagesInbox";
 import MessageForm from "./Messages/MessageForm";
 import FriendList from "./Friends/FriendList";
 import FriendRequestForm from "./Friends/FriendRequestForm";
+import CommentForm from "./Comments/CommentForm";
+
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
@@ -25,6 +27,7 @@ function App() {
             <Route path="/addfriend" element={<FriendRequestForm />} />
             <Route path="/messages" element={<MessageInbox />} />
             <Route path="/compose" element={<MessageForm />} />
+            <Route path="/comments/create" element={<CommentForm />} />
             <Route path="/signin" element={<SignInForm />} />
           </Routes>
         </div>

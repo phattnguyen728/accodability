@@ -4,27 +4,23 @@
 
 **Pre-reqs: Git, Docker**
 ​
-1. Fork the repository; clone its files to your local machine using the terminal command below:
-    - `git clone https://gitlab.com/its-not-a-phad/accodability.git`
-​
+
+1. Fork the repository; clone its files to your local machine using the terminal command below: - `git clone https://gitlab.com/its-not-a-phad/accodability.git`
+   ​
 2. Build and run the project with the following Docker commands in your terminal:
-    ```
-    docker volume create accodability-data
-    docker volume create pg-admin
-    docker-compose build
-    docker-compose up
-    ```
-3. Verify that each Docker container is running; there should be (4) in total:
-    - postgres-1
-    - ghi-1
-    - fastapi-1
-    - pg-admin-1
-​
+   ```
+   docker volume create accodability-data
+   docker volume create pg-admin
+   docker-compose build
+   docker-compose up
+   ```
+3. Verify that each Docker container is running; there should be (4) in total: - postgres-1 - ghi-1 - fastapi-1 - pg-admin-1
+   ​
 4. You can view the Accodability web app in your browser @ http://localhost:3000/.
 
 5. You can view the FastAPI web app in your browser @ http://localhost:8000/docs#/.
 
-6. You can viefw the PGAdmin web app in your browser @ http://localhost:8082/.
+6. You can view the PGAdmin web app in your browser @ http://localhost:8082/.
 
 ## Getting started
 

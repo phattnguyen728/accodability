@@ -114,3 +114,10 @@ def get_user_by_username_email_or_id(
     if user is None:
         response.status_code = 400
     return user
+
+
+@router.get("/currentuser")
+async def get_current_user_id(
+    token: UserToken = Depends(authenticator.get_current_account_data),
+):
+    return token
