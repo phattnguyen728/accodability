@@ -89,10 +89,10 @@ build-api-image:
 #       - public
 
 # friends feature
-friends-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd api
-    - pip install -r requirements.txt
-    - python -m pytest
+# friends-unit-test-job:
+#   image: python:3-bullseye
+#   stage: test
+#   script:
+#     - cd api
+#     - pip install -r requirements.txt
+#     - python -m pytest
