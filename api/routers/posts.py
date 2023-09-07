@@ -3,6 +3,7 @@ from queries.posts import PostQueries, PostOut, PostIn
 from typing import List
 from authenticator import authenticator
 from .users import UserToken
+
 router = APIRouter()
 
 
@@ -17,7 +18,9 @@ async def get_all_posts(
     try:
         return repo.get_all()
     except Exception:
-        raise HTTPException(status_code=400, detail="Could not retrieve posts.")
+        raise HTTPException(
+            status_code=400, detail="Could not retrieve posts."
+        )
 
 
 @router.post(
@@ -49,7 +52,9 @@ async def delete_post(
         else:
             raise HTTPException(status_code=404, detail="Post not found")
     except Exception:
-        raise HTTPException(status_code=400, detail="You are not the author of this post.")
+        raise HTTPException(
+            status_code=400, detail="You are not the author of this post."
+        )
 
 
 @router.get(
@@ -74,7 +79,7 @@ async def get_post_by_id(
 
 
 @router.put(
-    "/api/posts/{post_id}",##/author_id{author_id}
+    "/api/posts/{post_id}",  # #/author_id{author_id}
     response_model=PostOut,
 )
 async def update_post(
@@ -90,4 +95,7 @@ async def update_post(
             raise HTTPException(status_code=404, detail="Post not found")
         return updated_post
     except Exception:
-        raise HTTPException(status_code=500, detail="An error occurred while updating the post.")
+        raise HTTPException(
+            status_code=500,
+            detail="An error occurred while updating the post.",
+        )

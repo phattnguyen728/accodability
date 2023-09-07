@@ -1,121 +1,119 @@
-# # WORK IN PROGRESS***
-# # from routers.friends import get_pending_friend_requests, FriendListOut
-# from pydantic import BaseModel
-
-# # from fastapi import Depends, FastAPI
-# from fastapi.testclient import TestClient
-# from main import app
-# from queries.friends import FriendRequestOut, FriendQueries
-# from queries.users import UserOut
-# from authenticator import authenticator
-
-# from typing import Annotated
+import pytest
+from fastapi.testclient import TestClient
+from main import app
+from authenticator import authenticator
+from pydantic import BaseModel
+from queries.friends import (
+    FriendQueries,
+    FriendRequestOut,
+)
 
 
-# # https://fastapi.tiangolo.com/advanced/testing-dependencies/
-# # app = FastAPI()
+@pytest.fixture
+def client():
+    return TestClient(app)
 
 
-# async def common_parameters(
-#     q: str | None = None, skip: int = 0, limit: int = 100
-# ):
-#     return {"q": q, "skip": skip, "limit": limit}
+class UserToken(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
 
 
-# @app.get("/friends/")
-# async def read_items(commons: Annotated[dict, Depends(common_parameters)]):
-#     return {"message": "list of friends here", "params": commons}
-
-
-# client = TestClient(app)
-
-
-# async def override_dependency(q: str | None = None):
-#     return {"q": q, "skip": 5, "limit": 10}
-
-
-# app.dependency_overrides[common_parameters] = override_dependency
-
-
-# # replace "params" with FriendRequestOut content??
-# def test_override_in_friendsList():
-#     response = client.get("/items/")
-#     assert response.status_code == 200
-#     assert response.json() == {
-#         "message": "list of friends here",
-#         "params": {"q": None, "skip": 5, "limit": 10},
-#     }
-
-
-# #
-# def fake_create_first_account():
-#     return UserOut(
-#         id="1",
-#         first_name="john",
-#         last_name="cena",
-#         username="TheLegend42",
-#         email="test@test.com",
-#     )
-
-
-# def fake_create_second_account():
-#     return UserOut(
-#         id="2",
-#         first_name="naruto",
-#         last_name="Uzimaki",
-#         username="rasengan",
-#         email="naruto@test.com",
-#     )
-
-
-# def fake_get_first_account_data():
-#     return FriendRequestOut(
-#         id=1,
-#         sender_id="1",
-#         receiver_id="2",
-#         username="TheLegend42",
-#         status="pending",
-#     )
+def fake_get_first_account_data():
+    return {
+        "id": "1",
+        "first_name": "John",
+        "last_name": "Cena",
+        "username": "johncena",
+        "email": "johncena@test.com",
+    }
+    # return UserToken(
+    #     access_token="test_token_1",
+    #     token_type="Bearer",
+    #     user={
+    #         "id": "1",
+    #         "first_name": "John",
+    #         "last_name": "Cena",
+    #         "username": "johncena",
+    #         "email": "johncena@test.com",
+    #     },
+    # )
 
 
 # def fake_get_second_account_data():
-#     return FriendRequestOut(
-#         id=2,
-#         sender_id="2",
-#         receiver_id="1",
-#         username="rasengan",
-#         status="pending",
+#     return UserToken(
+#         access_token="test_token_2",
+#         token_type="Bearer",
+#         user={
+#             "id": "2",
+#             "first_name": "Naruto",
+#             "last_name": "Uzimaki",
+#             "username": "narutouzimaki",
+#             "email": "naruto@konoha.com",
+#         },
 #     )
 
 
-# # stuff from learn vvvvvv
+class FakeFriendQueries:
+    def send_friend_request(self, sender_id, receiver_id, username):
+        return FriendRequestOut(
+            id=1,
+            sender_id=1,
+            receiver_id=2,
+            username="string2",
+            status="pending",
+        )
+
+    def get_pending_friend_requests(self, user_id):
+        return [
+            {
+                "id": 2,
+                "receiver_id": 1,
+                "sender_id": 2,
+                "status": "pending",
+                "username": "string",
+            }
+        ]
 
 
-# def test_send_friend_request():
-#     app.dependency_overrides[
-#         authenticator.get_current_account_data
-#     ] = fake_get_first_account_data
+def test_send_friend_request(client):
+    # user_token_1 = fake_get_first_account_data()
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_first_account_data
+    app.dependency_overrides[FriendQueries] = FakeFriendQueries
 
-#     app.dependency_overrides[
-#         authenticator.get_current_account_data
-#     ] = fake_get_second_account_data
+    json = {"sender_id": 1, "receiver_id": 2, "username": "johncena"}
+    expected = {"Friend Request Message": "Friend request sent successfully"}
 
-#     response = client.post("/friends")
-#     # where sender = first account
-#     # where receiver = second account
-#     # where receiver_id = fake_get_second_account_data["id"]
+    response = client.post("/friends", json=json)
 
-#     app.dependency_overrides = {}
-#     # wipes the memory
-
-#     assert response.status_code == 200
-#     assert response.json() == FriendListOut(thing=2)
+    app.dependency_overrides = {}
+    assert response.status_code == 200
+    assert response.json() == expected
 
 
-# # def test_send_friend_request():
-# #     # user_id = 1
-# #     input = 1
+def test_get_friend_list(client):
+    # user_token = fake_get_first_account_data()
 
-# #     result = get_pending_friend_requests(input)
-
-# #     assert result == 2
+    # app.dependency_overrides[
+    #     authenticator.get_current_account_data
+    # ] = lambda: user_token.user
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_first_account_data
+    app.dependency_overrides[FriendQueries] = FakeFriendQueries
+    response = client.get("/friends")
+    app.dependency_overrides = {}
+    assert response.status_code == 200
+    expected = [
+        {
+            "id": 2,
+            "receiver_id": 1,
+            "sender_id": 2,
+            "status": "pending",
+            "username": "string",
+        }
+    ]
+    assert response.json() == expected

@@ -3,7 +3,7 @@ from authenticator import authenticator
 
 from main import app
 
-from queries.users import UserOut
+# from queries.users import UserOut
 from queries.comments import CommentIn, CommentOut, CommentQueries, CommentEdit
 from datetime import datetime
 
@@ -91,7 +91,7 @@ def test_delete_comment():
     response = client.delete("/api/posts/1/comments/1")
     app.dependency_overrides = {}
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() == bool(True)
 
 
 def test_update_comment():

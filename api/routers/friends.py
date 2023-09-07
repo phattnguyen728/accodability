@@ -33,7 +33,7 @@ async def send_friend_request(
         # request_id.send_friend_request(sender_id, receiver_id)
         friends.send_friend_request(sender_id, receiver_id, username)
         return {
-            "Message": " Friend request sent successfully",
+            "Friend Request Message": "Friend request sent successfully",
         }
     except Exception as e:
         errorMessage = f"Error Message is {str(e)}"
