@@ -29,6 +29,21 @@ function FriendList() {
       console.error(response);
     }
   };
+
+  // const handleApprove = async (sender_id) => {
+  //   const acceptUrl = `${process.env.REACT_APP_API_HOST}/friends/${sender_id}`;
+  //   const fetchConfig = {
+  //     method: "put",
+  //     headers: {
+  //       Authentication: `Bearer ${token}`,
+  //     },
+  //     credentials: "include",
+  //   };
+  //   const response = await fetch(acceptUrl, fetchConfig).then(() => {
+  //     fetchFriends();
+  //     console.log(response);
+  //   });
+  // };
   useEffect(() => {
     fetchFriends();
   }, [token]);
@@ -54,6 +69,17 @@ function FriendList() {
                   <td>{friend.sender_id}</td>
                   <td>{friend.username}</td>
                   <td>{friend.status}</td>
+                  <td>
+                    {/* <button
+                      name="approve"
+                      className="btn btn-success"
+                      onClick={() => {
+                        handleApprove(`${friend.id}`);
+                      }}
+                    >
+                      Approve
+                    </button> */}
+                  </td>
                 </tr>
               );
             })}

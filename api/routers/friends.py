@@ -6,7 +6,11 @@ from fastapi import (
 from authenticator import authenticator
 from .users import UserToken
 
-from queries.friends import FriendQueries, FriendRequestIn
+from queries.friends import (
+    FriendQueries,
+    FriendRequestIn,
+    FriendRequestApprove,
+)
 
 router = APIRouter()
 
@@ -64,12 +68,15 @@ async def get_pending_friend_requests(
 
 @router.put("/friends/{sender_id}")
 async def accept_friend_request(
-    sender_id: int,
-    receiver_id: int,
+    # sender_id: int,
+    # receiver_id: int,
+    approve: FriendRequestApprove,
     user: UserToken = Depends(authenticator.get_current_account_data),
     friendList: FriendQueries = Depends(),
 ):
-    receiver_id = user["id"]
+    # receiver_id = user["id"]
+    sender_id = approve.sender_id
+    receiver_id = approve.receiver_id
     if user is None:
         raise HTTPException(
             status_code=401, detail="User information not found in token"

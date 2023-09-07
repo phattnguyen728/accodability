@@ -20,6 +20,12 @@ class FriendRequestIn(BaseModel):
     # status: str
 
 
+class FriendRequestApprove(BaseModel):
+    sender_id: int
+    receiver_id: int
+    # status: str
+
+
 class FriendRequestOut(BaseModel):
     id: int
     sender_id: int
