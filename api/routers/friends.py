@@ -62,16 +62,17 @@ async def get_pending_friend_requests(
     return friends
 
 
-# @router.put("/friends{sender_id}")
-# async def accept_friend_request(
-#     sender_id: int,
-#     user: UserToken = Depends(authenticator.get_current_account_data),
-#     friendList: FriendQueries = Depends(),
-# ):
-#     user_id = user["id"]
-#     if user is None:
-#         raise HTTPException(
-#             status_code=401, detail="User information not found in token"
-#         )
-#     friends = friendList.approve_friend_request(user_id)
-#     return friends
+@router.put("/friends/{sender_id}")
+async def accept_friend_request(
+    sender_id: int,
+    receiver_id: int,
+    user: UserToken = Depends(authenticator.get_current_account_data),
+    friendList: FriendQueries = Depends(),
+):
+    receiver_id = user["id"]
+    if user is None:
+        raise HTTPException(
+            status_code=401, detail="User information not found in token"
+        )
+    status = friendList.approve_friend_request(sender_id, receiver_id)
+    return status

@@ -92,42 +92,51 @@ class FriendQueries:
             return {"error": errorMessage}, print(errorMessage)
 
     def approve_friend_request(
-        self, user_id
+        self, sender_id, receiver_id
     ) -> Union[List[FriendRequestOut], Error]:
         try:
+            # with pool.connection() as conn:
+            #     with conn.cursor() as cur:
+            #         result = cur.execute(
+            #             """
+            #             SELECT receiver_id, status
+            #             FROM friends
+            #             WHERE receiver_id = %s
+            #             """,
+            #             [user_id],
+            #         )
+            #         data = result.fetchone()
+            #         receiver_id_verify = data[0]
+            # if int(receiver_id_verify) == int(receiver_id):
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    result = cur.execute(
-                        """ 
-                        SELECT receiver_id, status
-                        FROM friends
-                        WHERE receiver_id = %s
+                    approved = "approved"
+                    cur.execute(
+                        """
+                        UPDATE friends
+                        SET status = %s
+                        WHERE receiver_id = %s AND sender_id = %s
                         """,
-                        [user_id],
+                        [approved, receiver_id, sender_id],
                     )
-                    data = result.fetchone()
-                    receiver_id_verify = data[0]
-            if int(receiver_id_verify) == int(user_id):
-                with pool.connection() as conn:
-                    with conn.cursor() as cur:
-                        approved = "approved"
-                        cur.execute(
+                    if cur.rowcount == 1:
+                        result = cur.execute(
                             """
-                                UPDATE friends
-                                SET status = %s
-                                WHERE receiver_id = %s
-                                """,
-                            [approved, user_id],
+                            SELECT * FROM friends
+                            WHERE receiver_id = %s
+                            """,
+                            [receiver_id],
                         )
-                        data = result.fetchone()
-                        for row in cur:
-                            return FriendRequestOut(
-                                id=row[0],
-                                sender_id=row[1],
-                                receiver_id=row[2],
-                                username=row[3],
-                                status=row[4],
-                            )
+                    approved = result.fetchone()
+                    if approved:
+                        return FriendRequestOut(
+                            id=approved[0],
+                            sender_id=approved[1],
+                            receiver_id=approved[2],
+                            username=approved[3],
+                            status=approved[4],
+                        )
+                    return None
 
         except Exception as e:
             errorMessage = f"Error Message is {str(e)}"
