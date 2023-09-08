@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
-// import UserProfile from "../Components/GetUser";
 
 export default function MessageInbox() {
   const { token } = useAuthContext();
@@ -8,31 +7,30 @@ export default function MessageInbox() {
   const [userProfiles, setUserProfiles] = useState({});
 
 
-
-
-
   useEffect(() => {
-    const fetchMessages = async () => {
-      const fetchConfig = {
-        method: "get",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        credentials: "include",
+    if (token) {
+      const fetchMessages = async () => {
+        const fetchConfig = {
+          method: "get",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+        };
+        const url = `${process.env.REACT_APP_API_HOST}/messages`;
+
+        const response = await fetch(url, fetchConfig);
+
+        if (response.ok) {
+          const data = await response.json();
+          setMessages(data["Message Inbox"]);
+        } else {
+          console.error(response);
+        }
       };
-      const url = `${process.env.REACT_APP_API_HOST}/messages`;
 
-      const response = await fetch(url, fetchConfig);
-
-      if (response.ok) {
-        const data = await response.json();
-        setMessages(data["Message Inbox"]);
-      } else {
-        console.error(response);
-      }
-    };
-
-    fetchMessages();
+      fetchMessages();
+    }
   }, [token]);
 
   useEffect(() => {

@@ -8,8 +8,6 @@ function FriendList() {
   const [userId, setUserId] = useState(null);
   const [userProfiles, setUserProfiles] = useState({});
 
-  // const [search, setSearch] = useState("");
-  // const [users, setUsers] = useState([]);
   const handleApprove = async (sender_id, friendRequestId) => {
     const updateFriend = {
       sender_id: parseInt(sender_id, 10),
@@ -25,13 +23,27 @@ function FriendList() {
       credentials: "include",
       body: JSON.stringify(updateFriend),
     };
-    // const response = await fetch(acceptUrl, fetchConfig).then(() => {
-    //   fetchFriends();
+
     const response = await fetch(acceptUrl, fetchConfig);
     if (response.ok) {
-      setFriends(response);
+      const fetchConfig = {
+        method: "get",
+        headers: {
+          Authentication: `Bearer ${token}`,
+        },
+        credentials: "include",
+      };
+      const url = `${process.env.REACT_APP_API_HOST}/friends`;
+      const response = await fetch(url, fetchConfig);
+
+      if (response.ok) {
+        const data = await response.json();
+
+        setFriends(data);
+      } else {
+        console.error(response);
+      }
     }
-    // console.log(response);
   };
   useEffect(() => {
     if (token) {
@@ -43,7 +55,7 @@ function FriendList() {
         console.error("Error decoding token:", error.message);
       }
     }
-  }, [token]);
+  }, [token, friends]);
 
   useEffect(() => {
     const fetchFriends = async () => {
@@ -56,10 +68,8 @@ function FriendList() {
       };
       const url = `${process.env.REACT_APP_API_HOST}/friends`;
       const response = await fetch(url, fetchConfig);
-      console.log(response);
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setFriends(data);
       } else {
         console.error(response);
@@ -114,9 +124,9 @@ function FriendList() {
             </tr>
           </thead>
           <tbody>
-            {friends.map((friend, index) => {
+            {friends.map((friend) => {
               return (
-                <tr key={index}>
+                <tr key={friend.id}>
                   <td>{friend.sender_id}</td>
                   <td>{userProfiles[friend.sender_id]?.username}</td>
                   <td>{friend.status}</td>
