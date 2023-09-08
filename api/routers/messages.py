@@ -14,9 +14,6 @@ router = APIRouter()
 
 @router.post("/messages")
 async def create_message(
-    # receiver_id: int,
-    # message_content: str,
-    # sender_id: int = None,
     message_form: MessageIn,
     sender: UserToken = Depends(authenticator.get_current_account_data),
     message: MessageQueries = Depends(),

@@ -16,21 +16,17 @@ class Error(BaseModel):
 class FriendRequestIn(BaseModel):
     sender_id: int
     receiver_id: int
-    # username: str
-    # status: str
 
 
 class FriendRequestApprove(BaseModel):
     sender_id: int
     receiver_id: int
-    # status: str
 
 
 class FriendRequestOut(BaseModel):
     id: int
     sender_id: int
     receiver_id: int
-    # username: str
     status: str
 
 
@@ -42,7 +38,6 @@ class FriendQueries:
     def send_friend_request(
         self, sender_id, receiver_id
     ) -> Union[List[FriendListOut], Error]:
-        # self.username = username
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -71,16 +66,6 @@ class FriendQueries:
                         """,
                         [user_id],
                     )
-                    # return cur.fetchall()
-                    # friends = []
-                    # message = FriendRequestOut(
-                    #     id=user["id"],
-                    #     sender_id=user["sender_id"],
-                    #     receiver_id=user["receiver_id"],
-                    #     username=user["username"],
-                    # )
-                    # friends.append(message)
-                    # return friends
                     friends = []
                     for row in cur:
                         message = FriendRequestOut(
@@ -100,19 +85,6 @@ class FriendQueries:
         self, sender_id, receiver_id
     ) -> Union[List[FriendRequestOut], Error]:
         try:
-            # with pool.connection() as conn:
-            #     with conn.cursor() as cur:
-            #         result = cur.execute(
-            #             """
-            #             SELECT receiver_id, status
-            #             FROM friends
-            #             WHERE receiver_id = %s
-            #             """,
-            #             [user_id],
-            #         )
-            #         data = result.fetchone()
-            #         receiver_id_verify = data[0]
-            # if int(receiver_id_verify) == int(receiver_id):
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     approved = "approved"

@@ -87,7 +87,7 @@ async def get_post_by_id(
 
 
 @router.put(
-    "/api/posts/{post_id}",  # #/author_id{author_id}
+    "/api/posts/{post_id}",
     response_model=PostOut,
 )
 async def update_post(

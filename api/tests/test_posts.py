@@ -18,16 +18,15 @@ class UserToken(BaseModel):
 
 
 def fake_get_current_account_data():
-    # return UserToken(
-    #     access_token="test_token",
-    #     token_type="Bearer",
-    return {
+    return (
+        {
             "id": "1",
             "first_name": "John",
             "last_name": "Doe",
             "username": "johndoe",
             "email": "johndoe@example.com",
         },
+    )
 
 
 class FakePostQueries:
@@ -40,9 +39,7 @@ class FakePostQueries:
         ] = fake_get_current_account_data
         json = {}
         expected = [
-                {
-
-                },
+            {},
         ]
         app.dependency_overrides[PostQueries] = FakePostQueries
         response = client.get("/posts", json=json)

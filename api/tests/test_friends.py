@@ -28,31 +28,6 @@ def fake_get_first_account_data():
         "username": "johncena",
         "email": "johncena@test.com",
     }
-    # return UserToken(
-    #     access_token="test_token_1",
-    #     token_type="Bearer",
-    #     user={
-    #         "id": "1",
-    #         "first_name": "John",
-    #         "last_name": "Cena",
-    #         "username": "johncena",
-    #         "email": "johncena@test.com",
-    #     },
-    # )
-
-
-# def fake_get_second_account_data():
-#     return UserToken(
-#         access_token="test_token_2",
-#         token_type="Bearer",
-#         user={
-#             "id": "2",
-#             "first_name": "Naruto",
-#             "last_name": "Uzimaki",
-#             "username": "narutouzimaki",
-#             "email": "naruto@konoha.com",
-#         },
-#     )
 
 
 class FakeFriendQueries:
@@ -76,7 +51,6 @@ class FakeFriendQueries:
 
 
 def test_send_friend_request(client):
-    # user_token_1 = fake_get_first_account_data()
     app.dependency_overrides[
         authenticator.get_current_account_data
     ] = fake_get_first_account_data
@@ -93,11 +67,6 @@ def test_send_friend_request(client):
 
 
 def test_get_friend_list(client):
-    # user_token = fake_get_first_account_data()
-
-    # app.dependency_overrides[
-    #     authenticator.get_current_account_data
-    # ] = lambda: user_token.user
     app.dependency_overrides[
         authenticator.get_current_account_data
     ] = fake_get_first_account_data
