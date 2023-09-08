@@ -13,21 +13,16 @@ function Nav() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container-fluid">
-        <NavLink className="navbar-brand" to="/">
+        <a className="navbar-brand" href="/">
+          <img
+            src="https://www.designfreelogoonline.com/wp-content/uploads/2019/08/00592-pointer-02.png"
+            alt="Logo"
+            width="30"
+            height="24"
+            className="d-inline-block align-text-top"
+          ></img>
           Accodability
-        </NavLink>
-        <NavLink className="navbar-brand" to="/addfriend">
-          Add Friend
-        </NavLink>
-        <NavLink className="navbar-brand" to="/friends">
-          Friends
-        </NavLink>
-        <NavLink className="navbar-brand" to="/messages">
-          Messages
-        </NavLink>
-        <NavLink className="navbar-brand" to="/compose">
-          Create Message
-        </NavLink>
+        </a>
         <button
           className="navbar-toggler"
           type="button"
@@ -41,36 +36,122 @@ function Nav() {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            {token && (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Messages
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a className="dropdown-item" href="/messages">
+                      Inbox
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/compose">
+                      Create Message
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {token && (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Friends
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a className="dropdown-item" href="/addfriend">
+                      Add Friends
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/friends">
+                      List Friends
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {token && (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Posts
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a className="dropdown-item" href="">
+                      View Posts
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="">
+                      Create Posts
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            )}
+            {token && (
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Comments
+                </a>
+                <ul className="dropdown-menu">
+                  <li>
+                    <a className="dropdown-item" href="">
+                      All Comments
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="">
+                      Your Comments
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="/comments/create">
+                      Create Comment
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            )}
             {!token && (
               <li className="nav-item">
-                <NavLink
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/signup"
-                >
+                <NavLink className="nav-link" aria-current="page" to="/signup">
                   Sign Up
                 </NavLink>
               </li>
             )}
             {!token && (
               <li className="nav-item">
-                <NavLink
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/signin"
-                >
+                <NavLink className="nav-link" aria-current="page" to="/signin">
                   Sign In
-                </NavLink>
-              </li>
-            )}
-            {token && (
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link active"
-                  aria-current="page"
-                  to="/comments/create"
-                >
-                  Create Comment
                 </NavLink>
               </li>
             )}
