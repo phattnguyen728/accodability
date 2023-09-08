@@ -129,33 +129,6 @@ class PostQueries:
 
             return None
 
-    # def update_post(self, post_id: int, post_data: PostIn) -> Optional[PostOut]:
-    #     try:
-    #         with pool.connection() as conn:
-    #             with conn.cursor() as cur:
-    #                 cur.execute(
-    #                     """
-    #                     UPDATE posts
-    #                     SET title = %s, body = %s, hyperlink = %s
-    #                     WHERE id = %s
-    #                     RETURNING *
-    #                     """,
-    #                     [post_data.title, post_data.body, post_data.hyperlink, post_id],
-    #                 )
-    #                 updated_post = cur.fetchone()
-    #                 if updated_post:
-    #                     return PostOut(
-    #                         id=updated_post[0],
-    #                         title=updated_post[1],
-    #                         body=updated_post[2],
-    #                         hyperlink=updated_post[3],
-    #                         author_id=updated_post[4],
-    #                         created_at=updated_post[5],
-    #                     )
-    #                 return None
-    #     except Exception as e:
-    #         print(e)
-    #         return None
     def update_post(self, post_id: int, post_data: PostIn, author_id: int) -> Optional[PostOut]:
         try:
             with pool.connection() as conn:
