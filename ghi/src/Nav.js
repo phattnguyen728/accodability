@@ -11,7 +11,7 @@ function Nav() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-success">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-secondary">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
           <img
@@ -141,6 +141,8 @@ function Nav() {
                 </ul>
               </li>
             )}
+          </ul>
+          <ul className="navbar-nav mb-2 mb-lg-0">
             {!token && (
               <li className="nav-item">
                 <NavLink className="nav-link" aria-current="page" to="/signup">
@@ -157,7 +159,7 @@ function Nav() {
             )}
             {token && (
               <button
-                className="btn btn-dark"
+                className="btn btn-light"
                 onClick={(event) => deleteToken(event)}
                 type="button"
               >
