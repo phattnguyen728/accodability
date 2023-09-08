@@ -16,7 +16,7 @@ class Error(BaseModel):
 class FriendRequestIn(BaseModel):
     sender_id: int
     receiver_id: int
-    username: str
+    # username: str
     # status: str
 
 
@@ -30,7 +30,7 @@ class FriendRequestOut(BaseModel):
     id: int
     sender_id: int
     receiver_id: int
-    username: str
+    # username: str
     status: str
 
 
@@ -40,18 +40,18 @@ class FriendListOut(BaseModel):
 
 class FriendQueries:
     def send_friend_request(
-        self, sender_id, receiver_id, username
+        self, sender_id, receiver_id
     ) -> Union[List[FriendListOut], Error]:
-        self.username = username
+        # self.username = username
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        INSERT INTO FRIENDS (sender_id, receiver_id, username)
-                        VALUES (%s, %s, %s)
+                        INSERT INTO FRIENDS (sender_id, receiver_id)
+                        VALUES (%s, %s)
                         """,
-                        [sender_id, receiver_id, username],
+                        [sender_id, receiver_id],
                     )
         except Exception as e:
             print(e)
@@ -65,7 +65,7 @@ class FriendQueries:
                 with conn.cursor() as cur:
                     cur.execute(
                         """
-                        SELECT id, sender_id, receiver_id, username, status
+                        SELECT id, sender_id, receiver_id, status
                         FROM friends
                         WHERE receiver_id = %s
                         """,
@@ -87,8 +87,7 @@ class FriendQueries:
                             id=row[0],
                             sender_id=row[1],
                             receiver_id=row[2],
-                            username=row[3],
-                            status=row[4],
+                            status=row[3],
                         )
                         friends.append(message)
                     return friends
@@ -139,8 +138,7 @@ class FriendQueries:
                             id=approved[0],
                             sender_id=approved[1],
                             receiver_id=approved[2],
-                            username=approved[3],
-                            status=approved[4],
+                            status=approved[3],
                         )
                     return None
 

@@ -6,6 +6,7 @@ function FriendList() {
   const { token } = useAuthContext();
   const [friends, setFriends] = useState([]);
   const [userId, setUserId] = useState(null);
+  const [userProfiles, setUserProfiles] = useState({});
 
   // const [search, setSearch] = useState("");
   // const [users, setUsers] = useState([]);
@@ -35,7 +36,7 @@ function FriendList() {
     console.log(response);
     if (response.ok) {
       const data = await response.json();
-
+      console.log(data);
       setFriends(data);
     } else {
       console.error(response);
@@ -62,9 +63,41 @@ function FriendList() {
       // console.log(response);
     });
   };
+
+  const fetchUserProfile = async (senderId) => {
+    const fetchConfig = {
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      credentials: "include",
+    };
+    const url = `${process.env.REACT_APP_API_HOST}/users/${senderId}`;
+
+    const response = await fetch(url, fetchConfig);
+
+    if (response.ok) {
+      const userProfile = await response.json();
+      setUserProfiles((currentProfiles) => {
+        const updatedProfiles = { ...currentProfiles };
+        updatedProfiles[senderId] = userProfile;
+        return updatedProfiles;
+      });
+    } else {
+      console.error(response);
+    }
+  };
+
   useEffect(() => {
     fetchFriends();
   }, [token]);
+
+  useEffect(() => {
+    friends.forEach((friend) => {
+      const senderId = friend.sender_id;
+      fetchUserProfile(senderId);
+    });
+  }, [friends]);
 
   return (
     <div>
@@ -85,7 +118,7 @@ function FriendList() {
               return (
                 <tr key={friend.id}>
                   <td>{friend.sender_id}</td>
-                  <td>{friend.username}</td>
+                  <td>{userProfiles[friend.sender_id]?.username}</td>
                   <td>{friend.status}</td>
                   {friend.status === "pending" && (
                     <td>

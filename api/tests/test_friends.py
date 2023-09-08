@@ -56,12 +56,11 @@ def fake_get_first_account_data():
 
 
 class FakeFriendQueries:
-    def send_friend_request(self, sender_id, receiver_id, username):
+    def send_friend_request(self, sender_id, receiver_id):
         return FriendRequestOut(
             id=1,
             sender_id=1,
             receiver_id=2,
-            username="string2",
             status="pending",
         )
 
@@ -72,7 +71,6 @@ class FakeFriendQueries:
                 "receiver_id": 1,
                 "sender_id": 2,
                 "status": "pending",
-                "username": "string",
             }
         ]
 
@@ -84,7 +82,7 @@ def test_send_friend_request(client):
     ] = fake_get_first_account_data
     app.dependency_overrides[FriendQueries] = FakeFriendQueries
 
-    json = {"sender_id": 1, "receiver_id": 2, "username": "johncena"}
+    json = {"sender_id": 1, "receiver_id": 2}
     expected = {"Friend Request Message": "Friend request sent successfully"}
 
     response = client.post("/friends", json=json)
@@ -108,12 +106,6 @@ def test_get_friend_list(client):
     app.dependency_overrides = {}
     assert response.status_code == 200
     expected = [
-        {
-            "id": 2,
-            "receiver_id": 1,
-            "sender_id": 2,
-            "status": "pending",
-            "username": "string",
-        }
+        {"id": 2, "receiver_id": 1, "sender_id": 2, "status": "pending"}
     ]
     assert response.json() == expected
