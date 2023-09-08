@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAuthContext, useToken } from "@galvanize-inc/jwtdown-for-react";
+import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import jwtDecode from "jwt-decode";
 
 function FriendList() {
@@ -10,39 +10,6 @@ function FriendList() {
 
   // const [search, setSearch] = useState("");
   // const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        const userId = parseInt(decodedToken.sub, 10);
-        setUserId(userId);
-      } catch (error) {
-        console.error("Error decoding token:", error.message);
-      }
-    }
-  }, [token]);
-
-  const fetchFriends = async () => {
-    const fetchConfig = {
-      method: "get",
-      headers: {
-        Authentication: `Bearer ${token}`,
-      },
-      credentials: "include",
-    };
-    const url = `${process.env.REACT_APP_API_HOST}/friends`;
-    const response = await fetch(url, fetchConfig);
-    console.log(response);
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      setFriends(data);
-    } else {
-      console.error(response);
-    }
-  };
-
   const handleApprove = async (sender_id, friendRequestId) => {
     const updateFriend = {
       sender_id: parseInt(sender_id, 10),
@@ -58,46 +25,79 @@ function FriendList() {
       credentials: "include",
       body: JSON.stringify(updateFriend),
     };
-    const response = await fetch(acceptUrl, fetchConfig).then(() => {
-      fetchFriends();
-      // console.log(response);
-    });
-  };
-
-  const fetchUserProfile = async (senderId) => {
-    const fetchConfig = {
-      method: "get",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      credentials: "include",
-    };
-    const url = `${process.env.REACT_APP_API_HOST}/users/${senderId}`;
-
-    const response = await fetch(url, fetchConfig);
-
+    // const response = await fetch(acceptUrl, fetchConfig).then(() => {
+    //   fetchFriends();
+    const response = await fetch(acceptUrl, fetchConfig);
     if (response.ok) {
-      const userProfile = await response.json();
-      setUserProfiles((currentProfiles) => {
-        const updatedProfiles = { ...currentProfiles };
-        updatedProfiles[senderId] = userProfile;
-        return updatedProfiles;
-      });
-    } else {
-      console.error(response);
+      setFriends(response);
     }
+    // console.log(response);
   };
+  useEffect(() => {
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        const userId = parseInt(decodedToken.sub, 10);
+        setUserId(userId);
+      } catch (error) {
+        console.error("Error decoding token:", error.message);
+      }
+    }
+  }, [token]);
 
   useEffect(() => {
+    const fetchFriends = async () => {
+      const fetchConfig = {
+        method: "get",
+        headers: {
+          Authentication: `Bearer ${token}`,
+        },
+        credentials: "include",
+      };
+      const url = `${process.env.REACT_APP_API_HOST}/friends`;
+      const response = await fetch(url, fetchConfig);
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        setFriends(data);
+      } else {
+        console.error(response);
+      }
+    };
+
     fetchFriends();
   }, [token]);
 
   useEffect(() => {
+    const fetchUserProfile = async (senderId) => {
+      const fetchConfig = {
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      };
+      const url = `${process.env.REACT_APP_API_HOST}/users/${senderId}`;
+
+      const response = await fetch(url, fetchConfig);
+
+      if (response.ok) {
+        const userProfile = await response.json();
+        setUserProfiles((currentProfiles) => {
+          const updatedProfiles = { ...currentProfiles };
+          updatedProfiles[senderId] = userProfile;
+          return updatedProfiles;
+        });
+      } else {
+        console.error(response);
+      }
+    };
     friends.forEach((friend) => {
       const senderId = friend.sender_id;
       fetchUserProfile(senderId);
     });
-  }, [friends]);
+  }, [friends, token]);
 
   return (
     <div>
@@ -114,9 +114,9 @@ function FriendList() {
             </tr>
           </thead>
           <tbody>
-            {friends.map((friend) => {
+            {friends.map((friend, index) => {
               return (
-                <tr key={friend.id}>
+                <tr key={index}>
                   <td>{friend.sender_id}</td>
                   <td>{userProfiles[friend.sender_id]?.username}</td>
                   <td>{friend.status}</td>

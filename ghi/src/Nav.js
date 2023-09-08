@@ -40,7 +40,7 @@ function Nav() {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="foo"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -65,7 +65,7 @@ function Nav() {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="foo"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -90,7 +90,7 @@ function Nav() {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="foo"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -99,12 +99,12 @@ function Nav() {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="">
+                    <a className="dropdown-item" href="foo">
                       View Posts
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="">
+                    <a className="dropdown-item" href="foo">
                       Create Posts
                     </a>
                   </li>
@@ -115,7 +115,7 @@ function Nav() {
               <li className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle"
-                  href="#"
+                  href="foo"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
@@ -124,12 +124,12 @@ function Nav() {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="">
+                    <a className="dropdown-item" href="foo">
                       All Comments
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="">
+                    <a className="dropdown-item" href="foo">
                       Your Comments
                     </a>
                   </li>

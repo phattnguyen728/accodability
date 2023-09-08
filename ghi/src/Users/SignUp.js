@@ -93,11 +93,11 @@ function SignUpForm() {
       passwordAlert.classList.remove("d-none");
     }
     for (let idx in userData) {
-      if (userData[idx]["username"] == username) {
+      if (userData[idx]["username"] === username) {
         accountAlert.classList.remove("d-none");
         return;
       }
-      if (userData[idx]["email"] == email) {
+      if (userData[idx]["email"] === email) {
         emailAlert.classList.remove("d-none");
         return;
       }

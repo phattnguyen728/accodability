@@ -8,53 +8,52 @@ function CommentForm() {
   const [comment, setComment] = useState("");
   const { token } = useToken();
 
+  let successMessage = document.getElementById("create-success");
+
   function handleCommentChange(event) {
     const { value } = event.target;
     setComment(value);
-    let successMessage = document.getElementById("create-success");
-    successMessage = successMessage.classList.add("d-none");
+    successMessage.classList.add("d-none");
   }
 
   function handlePostChange(event) {
     const { value } = event.target;
     setPost(value);
-    let successMessage = document.getElementById("create-success");
-    successMessage = successMessage.classList.add("d-none");
-  }
-
-  async function getPostData() {
-    const url = `${process.env.REACT_APP_API_HOST}/api/posts`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      setPostData(data);
-    } else {
-      console.error("An error occurred fetching post data");
-    }
-  }
-
-  async function getUserData() {
-    const url = `${process.env.REACT_APP_API_HOST}/currentuser`;
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      setUserData(data.id);
-    } else {
-      console.log("An error occurred fetching logged-in user data");
-    }
+    successMessage.classList.add("d-none");
   }
 
   useEffect(() => {
+    async function getPostData() {
+      const url = `${process.env.REACT_APP_API_HOST}/api/posts`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setPostData(data);
+      } else {
+        console.error("An error occurred fetching post data");
+      }
+    }
+
+    async function getUserData() {
+      const url = `${process.env.REACT_APP_API_HOST}/currentuser`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUserData(data.id);
+      } else {
+        console.log("An error occurred fetching logged-in user data");
+      }
+    }
     getPostData();
     getUserData();
   }, [token]);
@@ -82,8 +81,7 @@ function CommentForm() {
       console.log(newComment);
       setPost("");
       setComment("");
-      let successMessage = document.getElementById("create-success");
-      successMessage = successMessage.classList.remove("d-none");
+      successMessage.classList.remove("d-none");
     }
   }
 
