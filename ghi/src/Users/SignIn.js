@@ -6,22 +6,33 @@ function SignInForm() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login } = useToken();
+  const { login, token } = useToken();
+
+  let passwordAlert = document.getElementById("password-alert");
 
   function handleUsernameChange(event) {
     const { value } = event.target;
     setUsername(value);
+    passwordAlert.classList.add("d-none");
   }
 
   function handlePasswordChange(event) {
     const { value } = event.target;
     setPassword(value);
+    passwordAlert.classList.add("d-none");
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    login(username, password);
-    event.target.reset();
+    await login(username, password);
+    setTimeout(() => {
+      if (token === null) {
+        passwordAlert.classList.remove("d-none");
+      }
+    }, 500);
+  }
+
+  if (token) {
     navigate("/");
   }
 
@@ -59,6 +70,14 @@ function SignInForm() {
             </div>
             <button className="btn btn-primary">Login</button>
           </form>
+          <div
+            className="alert alert-danger alert-dismissible d-none fade show"
+            role="alert"
+            id="password-alert"
+          >
+            <strong>Alert:</strong> Your username or password is incorrect;
+            please re-enter and verify.
+          </div>
         </div>
       </div>
     </div>
