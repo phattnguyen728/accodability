@@ -7,37 +7,33 @@ function SignInForm() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const { login, token } = useToken();
-  const [showPasswordAlert, setShowPasswordAlert] = useState(false);
-  const [loginSuccess, setLoginSuccess] = useState(false);
+
+  let passwordAlert = document.getElementById("password-alert");
 
   function handleUsernameChange(event) {
     const { value } = event.target;
     setUsername(value);
-    setShowPasswordAlert(false);
+    if (passwordAlert) {
+      passwordAlert.classList.add("d-none");
+    }
   }
 
   function handlePasswordChange(event) {
     const { value } = event.target;
     setPassword(value);
-    setShowPasswordAlert(false);
+    if (passwordAlert) {
+      passwordAlert.classList.add("d-none");
+    }
   }
 
   async function handleSubmit(event) {
     event.preventDefault();
-    setLoginSuccess(false);
-    setShowPasswordAlert(false);
-
     await login(username, password);
-
-    if (token === null) {
-      setShowPasswordAlert(true);
-    } else {
-      setLoginSuccess(true);
-
-      setTimeout(() => {
-        navigate("/");
-      }, 500);
-    }
+    setTimeout(() => {
+      if (token === null) {
+        passwordAlert.classList.remove("d-none");
+      }
+    }, 500);
   }
 
   useEffect(() => {
@@ -81,24 +77,16 @@ function SignInForm() {
             <button className="btn btn-primary">Login</button>
           </form>
           <div
-            className={`alert alert-danger alert-dismissible ${
-              showPasswordAlert ? "" : "d-none"
-            } fade show`}
+            className="alert alert-danger alert-dismissible d-none fade show"
             role="alert"
             id="password-alert"
           >
             <strong>Alert:</strong> Your username or password is incorrect;
             please re-enter and verify.
           </div>
-          {loginSuccess && (
-            <div className="alert alert-success" role="alert">
-              Login successful. Redirecting...
-            </div>
-          )}
         </div>
       </div>
     </div>
   );
 }
-
 export default SignInForm;
