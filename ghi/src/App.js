@@ -10,6 +10,7 @@ import MessageForm from "./Messages/MessageForm";
 import FriendList from "./Friends/FriendList";
 import FriendRequestForm from "./Friends/FriendRequestForm";
 import CommentForm from "./Comments/CommentForm";
+import CreatePostForm from "./Posts/CreatePostForm";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -28,6 +29,7 @@ function App() {
             <Route path="/messages" element={<MessageInbox />} />
             <Route path="/compose" element={<MessageForm />} />
             <Route path="/comments/create" element={<CommentForm />} />
+            <Route path="/posts/create" element={<CreatePostForm />} />
             <Route path="/signin" element={<SignInForm />} />
           </Routes>
         </div>

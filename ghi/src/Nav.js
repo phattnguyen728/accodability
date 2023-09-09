@@ -104,7 +104,7 @@ function Nav() {
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="foo">
+                    <a className="dropdown-item" href="/posts/create">
                       Create Posts
                     </a>
                   </li>
