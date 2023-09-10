@@ -17,8 +17,9 @@ app.include_router(comments.router)
 app.include_router(messages.router)
 
 origins = [
-    os.environ.get("CORS_HOST", "http://localhost:3000"),
+    os.environ.get("CORS_HOST", None),
     "https://its-not-a-phad.gitlab.io",
+    "http://localhost:3000",
 ]
 app.add_middleware(
     CORSMiddleware,
