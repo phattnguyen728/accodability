@@ -13,7 +13,7 @@ variables:
   POSTGRES_PASSWORD: pineapples
   POSTGRES_HOST_AUTH_METHOD: trust
   DATABASE_URL: postgresql://accodability_superuser:pineapples@postgres/accodability_data
-  CORS_HOST: http://localhost:3000
+  CORS_HOST: https://its-not-a-phad.gitlab.io
   SIGNING_KEY: ${SIGNING_KEY}
 
 # Run flake8 to check for code quality
