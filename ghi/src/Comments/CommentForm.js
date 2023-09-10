@@ -54,8 +54,10 @@ function CommentForm() {
         console.log("An error occurred fetching logged-in user data");
       }
     }
-    getPostData();
-    getUserData();
+    if (token) {
+      getPostData();
+      getUserData();
+    }
   }, [token]);
 
   async function handleSubmit(event) {

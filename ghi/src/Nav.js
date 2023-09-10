@@ -124,12 +124,12 @@ function Nav() {
                 </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <a className="dropdown-item" href="foo">
+                    <a className="dropdown-item" href="/comments">
                       All Comments
                     </a>
                   </li>
                   <li>
-                    <a className="dropdown-item" href="foo">
+                    <a className="dropdown-item" href="/comments/yours">
                       Your Comments
                     </a>
                   </li>
