@@ -1,11 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import alyn2 from "./Assets/alyn2.png";
+import background from "./Assets/waves_lines_draft.jpg";
 
 function Home() {
-  const background =
-    "https://img.freepik.com/premium-vector/mountains-panoramic-view-abstract-illustration_185757-1312.jpg?w=2000";
-
   const sectionStyle = {
     backgroundImage: `url(${background})`,
     backgroundPosition: "center",

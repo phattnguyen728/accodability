@@ -64,15 +64,17 @@ function WeatherApi() {
             <form onSubmit={handleSubmit}>
               <input
                 type="search"
-                className="InputField"
+                className={`InputField color-background`}
                 placeholder="Enter your city"
                 onChange={(event) => {
                   setSearch(event.target.value);
                 }}
               />
-              <button type="submit" className="submitButton">
-                Search
-              </button>
+              <div className="button-container">
+                <button type="submit" className="submitButton">
+                  Search
+                </button>
+              </div>
             </form>
             {errorMessage ? (
               <div>
