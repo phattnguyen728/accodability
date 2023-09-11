@@ -16,6 +16,7 @@ body {
   font-size: 16px;
   border: none;
   outline: none;
+  color: whitesmoke;
 }
 
 .light-gray-input {
@@ -114,5 +115,5 @@ h3 b {
 }
 
 .color-background {
-  background-color: rgb(147, 197, 241);
+  background-color: #32b7d5;
 }
