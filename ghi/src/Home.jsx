@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import alyn2 from "./Assets/alyn2.png";
 
 function Home() {
   const background =
@@ -35,7 +36,7 @@ function Home() {
 
       <Link to="/alyn">
         <img
-          src="/alyn2.png"
+          src={alyn2}
           alt="Click to view Alyn's page"
           height="150"
           width="300px"
