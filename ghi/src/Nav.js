@@ -34,6 +34,9 @@ function Nav() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+        <NavLink className="navbar-brand" to="/weather">
+          Weather
+        </NavLink>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             {token && (

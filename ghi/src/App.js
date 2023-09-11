@@ -15,6 +15,7 @@ import CommentForm from "./Comments/CommentForm";
 import CreatePostForm from "./Posts/CreatePostForm";
 import ViewAllPostsForm from "./Posts/ViewAllPostsForm";
 import FindAlyn from "./Wanted/FindAlyn";
+import WeatherApi from "./Weather/Weather";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -39,6 +40,7 @@ function App() {
             <Route path="/posts/view" element={<ViewAllPostsForm />} />
             <Route path="/signin" element={<SignInForm />} />
             <Route path="/alyn" element={<FindAlyn />} />
+            <Route path="/weather" element={<WeatherApi />} />
           </Routes>
         </div>
       </AuthProvider>
