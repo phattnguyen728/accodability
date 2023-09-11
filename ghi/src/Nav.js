@@ -99,7 +99,7 @@ function Nav() {
                 </Link>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link className="dropdown-item" to="foo">
+                    <Link className="dropdown-item" to="/posts/view">
                       View Posts
                     </Link>
                   </li>

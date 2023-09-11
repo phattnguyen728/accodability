@@ -13,6 +13,7 @@ import GetComments from "./Comments/GetComments";
 import GetCommentsByUser from "./Comments/GetCommentsByUser";
 import CommentForm from "./Comments/CommentForm";
 import CreatePostForm from "./Posts/CreatePostForm";
+import ViewAllPostsForm from "./Posts/ViewAllPostsForm";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -34,6 +35,7 @@ function App() {
             <Route path="/comments/yours" element={<GetCommentsByUser />} />
             <Route path="/comments/create" element={<CommentForm />} />
             <Route path="/posts/create" element={<CreatePostForm />} />
+            <Route path="/posts/view" element={<ViewAllPostsForm />} />
             <Route path="/signin" element={<SignInForm />} />
           </Routes>
         </div>

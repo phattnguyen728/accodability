@@ -6,6 +6,8 @@ export default function CreatePostForm() {
   const { token } = useAuthContext();
   const [postContent, setPostContent] = useState("");
   const [userId, setUserId] = useState(null);
+  const [postTitle, setPostTitle] = useState("");
+  const [postHyperlink, setPostHyperlink] = useState("");
 
   useEffect(() => {
     if (token) {
@@ -29,9 +31,9 @@ export default function CreatePostForm() {
 
     const newPost = {
         author_id: userId,
-        title: "string",
+        title: postTitle,
         body: postContent,
-        hyperlink: "string"
+        hyperlink: postHyperlink,
     };
     console.log(JSON.stringify(newPost));
 
@@ -50,6 +52,8 @@ export default function CreatePostForm() {
 
       if (response.ok) {
         console.log("Post created successfully");
+        setPostTitle("");
+        setPostHyperlink("");
         setPostContent("");
       } else {
         console.error(response);
@@ -63,6 +67,28 @@ export default function CreatePostForm() {
     <div>
       <h2>Create a Post</h2>
       <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="postTitle">Post Title:</label>
+          <textarea
+            id="postTitle"
+            className="form-control"
+            value={postTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
+            placeholder="Write your title here"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="postHyperlink">Post Hyperlink:</label>
+          <textarea
+            id="postHyperlink"
+            className="form-control"
+            value={postHyperlink}
+            onChange={(e) => setPostHyperlink(e.target.value)}
+            placeholder="Add a hyperlink"
+            required
+          />
+        </div>
         <div className="form-group">
           <label htmlFor="postContent">Post Content:</label>
           <textarea
