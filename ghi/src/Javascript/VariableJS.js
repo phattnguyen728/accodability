@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const VariableJS = () => {
   return (
@@ -10,6 +11,7 @@ const VariableJS = () => {
         A variable is like a box with a sticky note stuck to it. Referencing the name on the sticky note will allow you to access whatever is inside the box (variable). Like the x and y variables used in mathematics, they're a simple name to represent the data we want to refer to.
 
       </p>
+      <Link to="/javascript">Back to JavaScript Tutorial Home</Link>
     </div>
   );
 };

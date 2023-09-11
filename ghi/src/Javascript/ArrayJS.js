@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ArrayJS = () => {
   return (
@@ -7,6 +8,7 @@ const ArrayJS = () => {
       <p>
         Arrays are lists of items.
       </p>
+      <Link to="/javascript">Back to JavaScript Tutorial Home</Link>
     </div>
   );
 };

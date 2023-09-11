@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const StringJS = () => {
   return (
@@ -10,6 +11,7 @@ const StringJS = () => {
         ' or double " will work, so long as you use the same at the beginning
         and end.
       </p>
+      <Link to="/javascript">Back to JavaScript Tutorial Home</Link>
     </div>
   );
 };

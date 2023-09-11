@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const StringPython = () => {
   return (
@@ -10,6 +11,7 @@ const StringPython = () => {
         ' or double " will work, so long as you use the same at the beginning
         and end.
       </p>
+      <Link to="/python">Back to Python Tutorial Home</Link>
     </div>
   );
 };
