@@ -17,6 +17,16 @@ import ViewAllPostsForm from "./Posts/ViewAllPostsForm";
 import FindAlyn from "./Wanted/FindAlyn";
 import WeatherApi from "./Weather/Weather";
 import Tutorial from "./Tutorial/Tutorial";
+import Javascript from "./Javascript/Javascript";
+import ArrayJS from "./Javascript/ArrayJS";
+import ObjectJS from "./Javascript/ObjectJS";
+import StringJS from "./Javascript/StringJS";
+import VariableJS from "./Javascript/VariableJS";
+import Python from "./Python/Python";
+import ArrayPython from "./Python/ArrayPY";
+import ObjectPython from "./Python/ObjectPY";
+import StringPython from "./Python/StringPY";
+import VariablePython from "./Python/VariablePY";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -43,7 +53,16 @@ function App() {
             <Route path="/alyn" element={<FindAlyn />} />
             <Route path="/weather" element={<WeatherApi />} />
             <Route path="/tutorial" element={<Tutorial />} />
-
+            <Route path="/javascript" element={<Javascript />} />
+            <Route path="/javascript/arrays" element={<ArrayJS />} />
+            <Route path="/javascript/strings" element={<StringJS />} />
+            <Route path="/javascript/variables" element={<VariableJS />} />
+            <Route path="/javascript/objects" element={<ObjectJS />} />
+            <Route path="/python" element={<Python />} />
+            <Route path="/python/arrays" element={<ArrayPython />} />
+            <Route path="/python/strings" element={<StringPython />} />
+            <Route path="/python/variables" element={<VariablePython />} />
+            <Route path="/python/objects" element={<ObjectPython />} />
           </Routes>
         </div>
       </AuthProvider>
