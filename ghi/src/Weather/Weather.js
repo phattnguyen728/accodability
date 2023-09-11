@@ -7,13 +7,12 @@ function WeatherApi() {
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    // Reset the error message when the search term changes
     setErrorMessage("");
   }, [search]);
 
   const fetchWeatherData = async () => {
     try {
-      const url = `http://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=4ebb9418ca605fa1931880e565ec065c`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=4ebb9418ca605fa1931880e565ec065c`;
       const response = await fetch(url);
 
       if (!response.ok) {
