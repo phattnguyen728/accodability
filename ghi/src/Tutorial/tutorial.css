@@ -1,0 +1,68 @@
+.tutorial {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.left-column,
+.right-column {
+  flex: 1;
+  padding: 20px;
+  background-color: rgb(240, 228, 228);
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.left-column h2,
+.right-column h2,
+.left-column p,
+.right-column p {
+  text-align: center;
+}
+
+.left-column img,
+.right-column img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.or-text {
+  font-size: 24px;
+  margin: 20px 0;
+  text-align: center;
+  color: rgb(61, 213, 61);
+}
+
+.header-text {
+  margin-bottom: 60px;
+}
+
+.image-container {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.background-image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-image: url("https://img.freepik.com/free-photo/cryptocurrency-coding-digital-blue-background-open-source-blockchain-concept_53876-124644.jpg?size=626&ext=jpg&ga=GA1.1.836317560.1694413651&semt=sph");
+}
