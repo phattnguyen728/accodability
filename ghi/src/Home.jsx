@@ -4,7 +4,7 @@ import alyn2 from "./Assets/alyn2.png";
 
 function Home() {
   const background =
-    "https://img.freepik.com/premium-vector/vector-wave-line-texture-with-white-background_934550-30.jpg";
+    "https://img.freepik.com/premium-vector/mountains-panoramic-view-abstract-illustration_185757-1312.jpg?w=2000";
 
   const sectionStyle = {
     backgroundImage: `url(${background})`,
@@ -96,8 +96,8 @@ function Home() {
           <img
             src={alyn2}
             alt="Click to view Alyn's page"
-            height="10px"
-            width="10px"
+            height="15px"
+            width="15px"
           />
         </Link>
       </div>
