@@ -43,11 +43,11 @@ function Home() {
         />
       </Link>
 
-      <div class="container-fluid py-3 text-center bg-light">
-        <div class="row">
-          <div class="col">
+      <div className="container-fluid py-3 text-center bg-light">
+        <div className="row">
+          <div className="col">
             <div className="card border-dark mb-3">
-              <div class="card-header text-bg-secondary">Add Friends</div>
+              <div className="card-header text-bg-secondary">Add Friends</div>
               <img
                 src="https://media.istockphoto.com/id/1321230821/vector/illustration-of-fist-bump-the-fist-bump-is-a-greeting-that-touches-fists-and-fists.jpg?s=612x612&w=0&k=20&c=TIpaEvrQ-QOsMYEpm9GtOyjF7AzRhvtYBb_4oMqIxeU="
                 className="card-img-top"
@@ -62,9 +62,11 @@ function Home() {
               </div>
             </div>
           </div>
-          <div class="col">
+          <div className="col">
             <div className="card border-dark mb-3">
-              <div class="card-header text-bg-secondary">Post & Comment</div>
+              <div className="card-header text-bg-secondary">
+                Post & Comment
+              </div>
               <img
                 src="https://media.istockphoto.com/id/1370336623/vector/line-browser-window-in-black-color-internet-stroke-page-concept-for-desktop-and-tablet-empty.jpg?s=612x612&w=0&k=20&c=ddP76kqkB4kLmp9g_Ae5iHidcoYBnczwa-cSaodqSQQ="
                 className="card-img-top"
@@ -80,9 +82,9 @@ function Home() {
               </div>
             </div>
           </div>
-          <div class="col">
+          <div className="col">
             <div className="card border-dark mb-3">
-              <div class="card-header text-bg-secondary">Send Messages</div>
+              <div className="card-header text-bg-secondary">Send Messages</div>
               <img
                 src="https://media.istockphoto.com/id/1153246546/vector/paper-plane-continuous-one-line-drawing.jpg?s=612x612&w=0&k=20&c=sWgKoEl6AeTUsaBt0CcrVXiO_rWbVsQXJYJT__-7zGk="
                 className="card-img-top"

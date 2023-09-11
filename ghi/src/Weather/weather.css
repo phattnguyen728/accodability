@@ -101,3 +101,15 @@ h3 b {
     transform: translateX(1000px);
   }
 }
+
+.submitButton {
+  background-color: #7fcce5;
+  padding: 12px 30px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #68b4d9;
+}
