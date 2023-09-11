@@ -14,6 +14,7 @@ import GetCommentsByUser from "./Comments/GetCommentsByUser";
 import CommentForm from "./Comments/CommentForm";
 import CreatePostForm from "./Posts/CreatePostForm";
 import ViewAllPostsForm from "./Posts/ViewAllPostsForm";
+import FindAlyn from "./Wanted/FindAlyn";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -37,6 +38,7 @@ function App() {
             <Route path="/posts/create" element={<CreatePostForm />} />
             <Route path="/posts/view" element={<ViewAllPostsForm />} />
             <Route path="/signin" element={<SignInForm />} />
+            <Route path="/alyn" element={<FindAlyn />} />
           </Routes>
         </div>
       </AuthProvider>
