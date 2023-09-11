@@ -9,6 +9,13 @@ function Home() {
     backgroundRepeat: "no-repeat",
   };
 
+  const styleGif = {
+    borderRadius: "50%",
+    width: "350px",
+    height: "350px",
+    background: "black",
+  };
+
   return (
     <>
       <div className=" py-5 text-center" style={sectionStyle}>
@@ -18,8 +25,7 @@ function Home() {
           <img
             src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXRtMjA1bXQ0M2dsN3dhYmU1d2Uzb3hkY3ZwMmxmbDIxeHMwMGdzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iIT5Y3Tz5AJ6yr4j55/giphy.gif"
             alt="ac-gif"
-            height="350px"
-            width="350px"
+            style={styleGif}
           ></img>
         </div>
       </div>
