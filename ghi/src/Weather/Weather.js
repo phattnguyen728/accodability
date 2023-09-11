@@ -39,7 +39,7 @@ function WeatherApi() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (search.trim() === "") {
-      setErrorMessage("Please enter a city and state");
+      setErrorMessage("Please enter another city");
     } else {
       fetchWeatherData();
     }
