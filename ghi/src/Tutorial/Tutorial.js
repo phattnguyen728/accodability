@@ -31,7 +31,7 @@ function Tutorial() {
               />
             </div>
             <p>Do you go JAVA JAVA JAVA JAVA?</p>
-            <p>Well click the image below for a taste</p>
+            <p>Grind up some beans and start brewing below</p>
             <div className="image-container">
               <Link to="/javascript">
                 <img
@@ -50,7 +50,7 @@ function Tutorial() {
 
           {/* Right Column for Python */}
           <div className="right-column">
-            <h2>Do you like Reptiles</h2>
+            <h2>Do you like Reptiles?</h2>
             <div className="image-container">
               <img
                 src="https://img.freepik.com/free-vector/cute-snake-illustration_478747-314.jpg?w=2000&t=st=1694424191~exp=1694424791~hmac=1fd5b2676e0adbbb566a25f2adeb36dd5d01806cc5ea886d695f4fa47d81848d"
