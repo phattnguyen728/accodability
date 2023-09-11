@@ -33,16 +33,6 @@ function Home() {
           ></img>
         </div>
       </div>
-
-      <Link to="/alyn">
-        <img
-          src={alyn2}
-          alt="Click to view Alyn's page"
-          height="150"
-          width="300px"
-        />
-      </Link>
-
       <div className="container-fluid py-3 text-center bg-light">
         <div className="row">
           <div className="col">
@@ -100,6 +90,16 @@ function Home() {
             </div>
           </div>
         </div>
+      </div>
+      <div>
+        <Link to="/alyn">
+          <img
+            src={alyn2}
+            alt="Click to view Alyn's page"
+            height="10px"
+            width="10px"
+          />
+        </Link>
       </div>
     </>
   );

@@ -34,14 +34,14 @@ function Nav() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <NavLink className="navbar-brand" to="/weather">
-          Weather
-        </NavLink>
-        <NavLink className="navbar-brand" to="/tutorial">
-          Tutorial
-        </NavLink>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <NavLink className="nav-link" to="/weather">
+              Weather
+            </NavLink>
+            <NavLink className="nav-link" to="/tutorial">
+              Tutorial
+            </NavLink>
             {token && (
               <li className="nav-item dropdown">
                 <Link
