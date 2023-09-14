@@ -11,7 +11,10 @@ function Nav() {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark" style={{ backgroundColor: "#1789a2" }}>
+    <nav
+      className="navbar navbar-expand-lg navbar-dark"
+      style={{ backgroundColor: "#1789a2" }}
+    >
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           <img

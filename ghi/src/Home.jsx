@@ -1,6 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import alyn2 from "./Assets/alyn2.png";
 import background from "./Assets/waves_lines_draft.jpg";
 
 function Home() {
@@ -88,16 +86,6 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
-      <div>
-        <Link to="/alyn">
-          <img
-            src={alyn2}
-            alt="Click to view Alyn's page"
-            height="15px"
-            width="15px"
-          />
-        </Link>
       </div>
     </>
   );

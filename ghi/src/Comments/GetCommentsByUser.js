@@ -83,10 +83,10 @@ function GetCommentsByUser() {
 
   return (
     <div className="container-fluid">
-      <h1>{userName}'s Comments</h1>
-      <table className="table table-striped">
+      <table className="table table-striped table-bordered table-hover caption-top">
+        <caption>{userName}'s Comments</caption>
         <thead>
-          <tr>
+          <tr className="table-info">
             <th>Post ID</th>
             <th>Comment</th>
             <th>Created At</th>

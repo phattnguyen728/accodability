@@ -66,7 +66,9 @@ function App() {
             <Route path="/python/objects" element={<ObjectPython />} />
           </Routes>
         </div>
-        <Footer />
+        <div style={{ backgroundColor: "#1789a2" }}>
+          <Footer />
+        </div>
       </AuthProvider>
     </BrowserRouter>
   );

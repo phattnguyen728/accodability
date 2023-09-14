@@ -33,7 +33,7 @@ function SignInForm() {
       if (token === null) {
         passwordAlert.classList.remove("d-none");
       }
-    }, 500);
+    }, 1000);
   }
 
   useEffect(() => {
