@@ -1,5 +1,6 @@
 import os
 from fastapi import Depends
+from datetime import timedelta
 from jwtdown_fastapi.authentication import Authenticator
 from queries.users import UserOutWithPassword, UserQueries, UserOut
 
@@ -25,6 +26,9 @@ class MyAuthenticator(Authenticator):
         return user.id, UserOut(**user.dict())
 
 
+two_hours = timedelta(hours=2)
+
 authenticator = MyAuthenticator(
     os.environ["SIGNING_KEY"],
+    exp=two_hours,
 )

@@ -27,6 +27,7 @@ import ArrayPython from "./Python/ArrayPY";
 import ObjectPython from "./Python/ObjectPY";
 import StringPython from "./Python/StringPY";
 import VariablePython from "./Python/VariablePY";
+import Footer from "./Footer";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -65,6 +66,7 @@ function App() {
             <Route path="/python/objects" element={<ObjectPython />} />
           </Routes>
         </div>
+        <Footer />
       </AuthProvider>
     </BrowserRouter>
   );

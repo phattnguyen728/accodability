@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import jwtDecode from "jwt-decode";
+// import "./Friends.css";
 
 function FriendList() {
   const { token } = useAuthContext();
@@ -115,12 +116,13 @@ function FriendList() {
       {friends.length === 0 ? (
         <p>No friends yet.</p>
       ) : (
-        <table className="table table-dark table-hover table-striped">
+        <table className="table table-striped table-bordered table-hover caption-top">
           <thead>
-            <tr>
-              <th>user_id</th>
-              <th>username</th>
-              <th>status</th>
+            <tr className="table-info">
+              <th>Sender ID</th>
+              <th>Username</th>
+              <th>Status</th>
+              <th> </th>
             </tr>
           </thead>
           <tbody>
@@ -130,8 +132,12 @@ function FriendList() {
                   <td>{friend.sender_id}</td>
                   <td>{userProfiles[friend.sender_id]?.username}</td>
                   <td>{friend.status}</td>
-                  {friend.status === "pending" && (
-                    <td>
+                  <td
+                    className={
+                      friend.status === "pending" ? "" : "hidden-button"
+                    }
+                  >
+                    {friend.status === "pending" ? (
                       <button
                         name="approve"
                         className="btn btn-success"
@@ -141,8 +147,8 @@ function FriendList() {
                       >
                         Approve
                       </button>
-                    </td>
-                  )}
+                    ) : null}
+                  </td>
                 </tr>
               );
             })}

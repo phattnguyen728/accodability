@@ -6,7 +6,6 @@ export default function MessageInbox() {
   const [messages, setMessages] = useState([]);
   const [userProfiles, setUserProfiles] = useState({});
 
-
   useEffect(() => {
     if (token) {
       const fetchMessages = async () => {
@@ -69,9 +68,9 @@ export default function MessageInbox() {
       {messages.length === 0 ? (
         <p>No messages yet.</p>
       ) : (
-        <table className="table table-dark table-hover table-striped">
+        <table className="table table-striped table-bordered table-hover caption-top">
           <thead>
-            <tr>
+            <tr className="table-info">
               <th>Sender ID</th>
               <th>Message Content</th>
               <th>From Username</th>
@@ -88,8 +87,9 @@ export default function MessageInbox() {
                 <td>{userProfiles[message.sender_id]?.email}</td>
                 <td>
                   {userProfiles[message.sender_id]
-                    ? `${userProfiles[message.sender_id].first_name} ${userProfiles[message.sender_id].last_name
-                    }`
+                    ? `${userProfiles[message.sender_id].first_name} ${
+                        userProfiles[message.sender_id].last_name
+                      }`
                     : ""}
                 </td>
               </tr>
