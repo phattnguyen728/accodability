@@ -203,7 +203,7 @@ function SignUpForm() {
                 E-Mail Address
               </label>
             </div>
-            <button className="btn btn-primary">Create Account</button>
+            <button className="btn btn-info">Create Account</button>
           </form>
           <div
             className="alert alert-success alert-dismissible d-none fade show"

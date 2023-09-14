@@ -111,7 +111,7 @@ export default function MessageForm() {
             />
             <button
               type="button"
-              className="btn btn-primary"
+              className="btn btn-info"
               onClick={handleSearch}
             >
               Search
@@ -150,7 +150,7 @@ export default function MessageForm() {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-info">
           Send Message
         </button>
       </form>

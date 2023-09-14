@@ -140,7 +140,7 @@ function FriendList() {
                     {friend.status === "pending" ? (
                       <button
                         name="approve"
-                        className="btn btn-success"
+                        className="btn btn-info"
                         onClick={() => {
                           handleApprove(`${friend.sender_id}`, friend.id);
                         }}

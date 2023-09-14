@@ -106,11 +106,7 @@ const FriendRequest = () => {
             placeholder="Search by username, email, or ID"
             required
           />
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={handleSearch}
-          >
+          <button type="button" className="btn btn-info" onClick={handleSearch}>
             Search
           </button>
         </div>
@@ -137,7 +133,7 @@ const FriendRequest = () => {
           <p>Full Name: {`${recipient.first_name} ${recipient.last_name}`}</p>
         </div>
       )}
-      <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
+      <button type="submit" className="btn btn-info" onClick={handleSubmit}>
         Send Request
       </button>
     </div>

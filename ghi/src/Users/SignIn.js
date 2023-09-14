@@ -74,7 +74,7 @@ function SignInForm() {
                 Password
               </label>
             </div>
-            <button className="btn btn-primary">Login</button>
+            <button className="btn btn-info">Login</button>
           </form>
           <div
             className="alert alert-danger alert-dismissible d-none fade show"

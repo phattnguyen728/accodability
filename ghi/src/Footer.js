@@ -6,9 +6,18 @@ function Footer() {
   return (
     <>
       <div className="bg-white mt-5 pt-5">
-        <Wave fill="url(#gradient)" className="fixed-bottom">
+        <Wave
+          fill="url(#gradient)"
+          className="fixed-bottom"
+          options={{
+            height: 20,
+            amplitude: 40,
+            speed: 0.075,
+            points: 5,
+          }}
+        >
           <defs>
-            <linearGradient id="gradient" gradientTransform="rotate(90)">
+            <linearGradient id="gradient" gradientTransform="rotate(45)">
               <stop offset="40%" stopColor="#aae0ee" />
               <stop offset="95%" stopColor="#1789a2" />
             </linearGradient>

@@ -124,7 +124,7 @@ function CommentForm() {
                 Comment
               </label>
             </div>
-            <button className="btn btn-primary">Create Comment</button>
+            <button className="btn btn-info">Create Comment</button>
           </form>
           <div
             className="alert alert-success alert-dismissible d-none fade show"
