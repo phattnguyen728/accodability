@@ -116,13 +116,13 @@ function FriendList() {
       {friends.length === 0 ? (
         <p>No friends yet.</p>
       ) : (
-        <table className="table table-striped table-bordered table-hover caption-top">
+        <table className="table table-striped table-bordered table-hover caption-top custom-table">
           <thead>
             <tr className="table-info">
-              <th>Sender ID</th>
-              <th>Username</th>
-              <th>Status</th>
-              <th> </th>
+              <th style={{ width: "20%" }}>Sender ID</th>
+              <th style={{ width: "30%" }}>Username</th>
+              <th style={{ width: "30%" }}>Status</th>
+              <th style={{ width: "20%" }}> </th>
             </tr>
           </thead>
           <tbody>
