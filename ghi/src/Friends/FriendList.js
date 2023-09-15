@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useAuthContext } from "@galvanize-inc/jwtdown-for-react";
 import jwtDecode from "jwt-decode";
+import alyn1 from "../Assets/alyn1.png";
 // import "./Friends.css";
 
 function FriendList() {
@@ -114,7 +115,10 @@ function FriendList() {
     <div>
       <h2>Friend List</h2>
       {friends.length === 0 ? (
-        <p>No friends yet.</p>
+        <>
+          <p>You have no friends yet. Have you seen this person? Help us find him and he will be your friend</p>
+          <img src={alyn1} alt="Have you seen Alyn" />;
+        </>
       ) : (
         <table className="table table-striped table-bordered table-hover caption-top custom-table">
           <thead>
