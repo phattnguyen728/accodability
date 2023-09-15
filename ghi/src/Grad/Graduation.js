@@ -1,5 +1,6 @@
 import React from "react";
 import smile from "../Assets/smile.gif";
+import Confetti from 'react-confetti'
 
 function Graduation() {
   const sectionStyle = {
@@ -13,15 +14,24 @@ function Graduation() {
     backgroundColor: "#B3E5FC",
   };
 
+  const confettiConfig = {
+    width: "2000%",
+    height: "800%",
+  };
+
+
   return (
-    <div style={bodyStyle}>
-      <div className="py-5 text-center" style={sectionStyle}>
-        Congratulations May Class of 2023!!!
+    <>
+      <div style={bodyStyle}>
+        <div className="py-5 text-center" style={sectionStyle}>
+          Congratulations May Class of 2023!!!
+        </div>
+        <div className="text-center">
+          <img src={smile} alt="Smile GIF" />
+        </div>
       </div>
-      <div className="text-center">
-        <img src={smile} alt="Smile GIF" />
-      </div>
-    </div>
+      <Confetti {...confettiConfig} />
+    </>
   );
 }
 

@@ -30,6 +30,7 @@ import VariablePython from "./Python/VariablePY";
 import Footer from "./Footer";
 import Graduation from "./Grad/Graduation";
 
+
 function App() {
   const domain = /https:\/\/[^/]+/;
   const basename = process.env.PUBLIC_URL.replace(domain, "");
