@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
+import Confetti from "react-confetti";
+import ReactAudioPlayer from "react-audio-player";
+import congratAudio from "../Assets/congrat.mp3";
 import smile from "../Assets/smile.gif";
-import Confetti from 'react-confetti'
 
 function Graduation() {
   const sectionStyle = {
@@ -19,6 +21,11 @@ function Graduation() {
     height: "800%",
   };
 
+  const [playClicked, setPlayClicked] = useState(false);
+
+  const handlePlayButtonClick = () => {
+    setPlayClicked(true);
+  };
 
   return (
     <>
@@ -27,10 +34,25 @@ function Graduation() {
           Congratulations May Class of 2023!!!
         </div>
         <div className="text-center">
-          <img src={smile} alt="Smile GIF" />
+          {!playClicked && (
+            <button onClick={handlePlayButtonClick}>Hit this button</button>
+          )}
+          {playClicked && (
+            <>
+              <img src={smile} alt="Smile GIF" />
+              <Confetti {...confettiConfig} />
+              <ReactAudioPlayer
+                src={congratAudio}
+                autoPlay={true}
+                controls={false}
+                volume={0.30}
+                onEnded={() => {
+                }}
+              />
+            </>
+          )}
         </div>
       </div>
-      <Confetti {...confettiConfig} />
     </>
   );
 }
