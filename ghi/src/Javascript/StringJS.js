@@ -38,7 +38,7 @@ const StringJS = () => {
   }, []);
 
   return (
-    <div>
+    <div style={{ paddingLeft: '20px' }}>
       <h1>JavaScript Code Editor</h1>
       <textarea ref={textareaRef}></textarea>
       <button onClick={runCode}>Run Code</button>

@@ -94,7 +94,7 @@ export default function MessageForm() {
   };
 
   return (
-    <div>
+    <div style={{ paddingLeft: '20px' }}>
       <h2>Send a Message</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">

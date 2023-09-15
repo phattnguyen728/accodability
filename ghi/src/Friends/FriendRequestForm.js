@@ -92,7 +92,7 @@ const FriendRequest = () => {
   };
 
   return (
-    <div>
+    <div style={{ paddingLeft: '20px' }}>
       <h2>Send Friend Request</h2>
       <div>
         <label htmlFor="searchQuery">Recipient:</label>

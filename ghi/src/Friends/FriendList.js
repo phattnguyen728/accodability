@@ -112,7 +112,7 @@ function FriendList() {
   }, [friends, token]);
 
   return (
-    <div>
+    <div style={{ paddingLeft: '20px' }}>
       <h2>Friend List</h2>
       {friends.length === 0 ? (
         <>

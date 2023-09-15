@@ -63,7 +63,7 @@ export default function MessageInbox() {
   }, [messages, token]);
 
   return (
-    <div>
+    <div style={{ paddingLeft: '20px' }}>
       <h2>Message Inbox</h2>
       {messages.length === 0 ? (
         <p>No messages yet.</p>
@@ -87,9 +87,8 @@ export default function MessageInbox() {
                 <td>{userProfiles[message.sender_id]?.email}</td>
                 <td>
                   {userProfiles[message.sender_id]
-                    ? `${userProfiles[message.sender_id].first_name} ${
-                        userProfiles[message.sender_id].last_name
-                      }`
+                    ? `${userProfiles[message.sender_id].first_name} ${userProfiles[message.sender_id].last_name
+                    }`
                     : ""}
                 </td>
               </tr>
