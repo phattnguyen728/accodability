@@ -28,6 +28,7 @@ import ObjectPython from "./Python/ObjectPY";
 import StringPython from "./Python/StringPY";
 import VariablePython from "./Python/VariablePY";
 import Footer from "./Footer";
+import Graduation from "./Grad/Graduation";
 
 function App() {
   const domain = /https:\/\/[^/]+/;
@@ -64,6 +65,7 @@ function App() {
             <Route path="/python/strings" element={<StringPython />} />
             <Route path="/python/variables" element={<VariablePython />} />
             <Route path="/python/objects" element={<ObjectPython />} />
+            <Route path="/congrats" element={<Graduation />} />
           </Routes>
         </div>
         <div style={{ backgroundColor: "#1789a2" }}>
