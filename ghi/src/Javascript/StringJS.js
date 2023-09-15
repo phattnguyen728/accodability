@@ -15,7 +15,11 @@ const StringJS = () => {
       if (result !== undefined) {
         setOutput(result.toString());
       } else {
-        setOutput('Output is undefined');
+        setOutput(
+          <a href="https://its-not-a-phad.gitlab.io/accodability/congrats">
+            Let's Play A Game
+          </a>
+        );
       }
     } catch (error) {
       setOutput(`Error: ${error.message}`);
